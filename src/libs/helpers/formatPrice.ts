@@ -1,9 +1,11 @@
 export function formatPrice(number: number) {
-  return Number(number).toLocaleString('en-US', {
-    style: 'currency',
-    currency: 'BDT',
+  const formattedNumber = Number(number).toLocaleString('en-US', {
+    style: 'decimal',
     minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
   });
+
+  return `৳${formattedNumber}`;
 }
 
 export function calculateDiscountPercentage(

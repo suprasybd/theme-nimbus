@@ -25,9 +25,9 @@ const ProductPricing: React.FC<ProductPricingProps> = ({
             {formatPrice(salesPrice)}
           </span>
           <span className="px-2 py-1 text-sm font-medium text-white bg-green-500 rounded">
-            {Math.abs(calculateDiscountPercentage(salesPrice, price)).toFixed(
-              0
-            )}
+            {Math.abs(calculateDiscountPercentage(salesPrice, price))
+              .toFixed(2)
+              .replace(/\.?0+$/, '')}
             % OFF
           </span>
         </>

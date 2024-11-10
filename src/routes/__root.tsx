@@ -37,52 +37,57 @@ const RootComponent: React.FC = () => {
     }
   }, [store]);
 
-  const injectFavicon = (url: string) => {
-    const favicon = document.createElement('link');
-    favicon.rel = 'icon';
-    favicon.href = url;
-
-    const head = document.querySelector('head');
-
-    head?.appendChild(favicon);
-  };
-
   useEffect(() => {
     if (logo?.FaviconLink) {
-      injectFavicon(logo.FaviconLink);
+      const favicon = document.createElement('link');
+      favicon.rel = 'icon';
+      favicon.href = logo.FaviconLink;
+      document.querySelector('head')?.appendChild(favicon);
     }
   }, [logo]);
 
-  const turnstileData = turnstileResponse?.Data;
-
   useEffect(() => {
-    if (turnstileData && turnstileData.TurnstileKey) {
-      localStorage.setItem('turnstile-site-key', turnstileData.TurnstileKey);
+    if (turnstileResponse?.Data?.TurnstileKey) {
+      localStorage.setItem(
+        'turnstile-site-key',
+        turnstileResponse.Data.TurnstileKey
+      );
     }
-  }, [turnstileData]);
+  }, [turnstileResponse]);
 
   return (
-    <>
-      <header className="w-full max-w-[1220px] h-fit mx-auto gap-6 py-6 px-4 sm:px-8 ">
+    <div className="flex flex-col min-h-screen bg-gradient-to-b from-slate-50 to-white">
+      {/* Header - Removed container constraints */}
+      <header className="sticky top-0 z-50 w-full">
         <NavBar />
       </header>
-      <Cart />
-      <Modals />
-      <ScrollRestoration />
-      <Outlet />
-      {/* footer */}
 
-      <Footer />
+      {/* Main Content */}
+      <main className="flex-1">
+        <div className="premium-container py-8">
+          <Cart />
+          <Modals />
+          <ScrollRestoration />
+          <Outlet />
+        </div>
+      </main>
 
-      {/* <TanStackRouterDevtools /> */}
-    </>
+      {/* Footer - Consider removing container here too for full-width */}
+      <footer className="bg-slate-900 text-slate-200">
+        <div className="premium-container py-12">
+          <Footer />
+        </div>
+      </footer>
+    </div>
   );
 };
+
 interface MyRouterContext {
   hasCookie: boolean;
   auth: AuthStoreType | undefined;
   queryClient: QueryClient;
 }
+
 export const Route = createRootRouteWithContext<MyRouterContext>()({
   component: () => <RootComponent />,
 });

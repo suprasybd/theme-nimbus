@@ -71,24 +71,26 @@ export const formSchemaCheckout = z.object({
 
 const LoginPrompt = () => {
   return (
-    <div className="mt-2 p-4 bg-blue-50 rounded-lg border border-blue-100">
+    <div className="mt-2 p-4 bg-emerald-50 rounded-lg border border-emerald-100">
       <div className="flex flex-col gap-3">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0">
-            <Lock className="h-5 w-5 text-blue-600" />
+          <div className="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
+            <Lock className="h-5 w-5 text-emerald-600" />
           </div>
           <div>
-            <h3 className="text-sm font-medium text-blue-900">Welcome Back!</h3>
-            <p className="text-sm text-blue-600">
-              Looks like you already have an account. Please sign in to continue
-              with your purchase.
+            <h3 className="text-sm font-medium text-emerald-900">
+              Welcome Back!
+            </h3>
+            <p className="text-sm text-emerald-600">
+              Looks like you already have an account. Please sign in to
+              continue.
             </p>
           </div>
         </div>
         <Link to="/login" search={{ redirect: '/checkout' }} className="w-full">
           <Button
             variant="default"
-            className="w-full bg-blue-600 hover:bg-blue-700"
+            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white"
           >
             Sign In to Continue
           </Button>
@@ -323,22 +325,27 @@ const Checkout = () => {
             <div className="mb-6">
               <CheckCircle className="h-16 w-16 text-green-500 mx-auto" />
             </div>
-            <h1 className="text-4xl font-medium mb-4">
+            <h1 className="text-3xl font-medium mb-4 text-slate-900">
               Thank you for your order!
             </h1>
-            <p className="text-gray-600 mb-6">
+            <p className="text-slate-600 mb-6">
               Your order has been successfully placed. We've sent a confirmation
               email to your inbox with all the order details. Please check your
               email for further instructions.
             </p>
             <div className="space-y-4">
               <Link to="/details">
-                <Button variant="outline" className="w-full py-6">
+                <Button
+                  variant="outline"
+                  className="w-full py-6 border-slate-200 hover:bg-slate-50"
+                >
                   View Order Details
                 </Button>
               </Link>
               <Link to="/" className="mt-3">
-                <Button className="w-full py-6">Continue Shopping</Button>
+                <Button className="w-full py-6 bg-blue-600 hover:bg-blue-700 text-white">
+                  Continue Shopping
+                </Button>
               </Link>
             </div>
           </div>
@@ -348,181 +355,247 @@ const Checkout = () => {
   }
 
   return (
-    <div className="w-full max-w-[1220px] min-h-full mx-auto gap-6 py-6 px-4 sm:px-8">
-      <div className="flex flex-col-reverse md:grid md:grid-cols-[1fr,400px] gap-8">
-        {/* Form Section */}
-        <Form {...form}>
-          <form onSubmit={handleFormWrapper} className="space-y-6">
-            {/* Delivery Details Section */}
-            <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
-              <h1 className="text-xl sm:text-2xl font-semibold mb-6">
-                Delivery Details
-              </h1>
-              <div className="space-y-4 sm:space-y-6">
-                <FormField
-                  control={form.control}
-                  name="FullName"
-                  render={({ field }) => (
-                    <FormItem className="!my-[10px] w-full">
-                      <FormLabel>Full Name</FormLabel>
-                      <FormControl>
-                        <Input
-                          className="py-5 sm:py-6"
-                          FormError={!!form.formState.errors.FullName}
-                          placeholder="Full name"
-                          readOnly={isAuthenticated && !!user?.FullName}
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+    <div className="w-full min-h-full bg-gradient-to-br from-gray-50 to-gray-100">
+      <div className="max-w-[1220px] mx-auto gap-6 py-8 px-4 sm:px-8">
+        <div className="flex flex-col-reverse md:grid md:grid-cols-[1fr,380px] gap-8">
+          {/* Form Section */}
+          <Form {...form}>
+            <form onSubmit={handleFormWrapper} className="space-y-6">
+              {/* Delivery Details Section */}
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:border-emerald-200 transition-colors">
+                <h1 className="text-xl sm:text-2xl font-semibold mb-6 text-gray-900 flex items-center gap-2">
+                  <span className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-sm">
+                    1
+                  </span>
+                  Delivery Details
+                </h1>
+                <div className="space-y-4 sm:space-y-6">
+                  <FormField
+                    control={form.control}
+                    name="FullName"
+                    render={({ field }) => (
+                      <FormItem className="!my-[10px] w-full">
+                        <FormLabel>Full Name</FormLabel>
+                        <FormControl>
+                          <Input
+                            className="py-5 sm:py-6"
+                            FormError={!!form.formState.errors.FullName}
+                            placeholder="Full name"
+                            readOnly={isAuthenticated && !!user?.FullName}
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-                <FormField
-                  control={form.control}
-                  name="Email"
-                  render={({ field }) => (
-                    <FormItem className="!my-[10px]">
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="email"
-                          className="py-5 sm:py-6"
-                          FormError={!!form.formState.errors.Email}
-                          placeholder="Email"
-                          readOnly={isAuthenticated && !!user?.Email}
-                          {...field}
-                        />
-                      </FormControl>
-                      <FormMessage />
-                      {canPurchase === false && <LoginPrompt />}
-                    </FormItem>
-                  )}
-                />
+                  <FormField
+                    control={form.control}
+                    name="Email"
+                    render={({ field }) => (
+                      <FormItem className="!my-[10px]">
+                        <FormLabel>Email</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="email"
+                            className="py-5 sm:py-6"
+                            FormError={!!form.formState.errors.Email}
+                            placeholder="Email"
+                            readOnly={isAuthenticated && !!user?.Email}
+                            {...field}
+                          />
+                        </FormControl>
+                        <FormMessage />
+                        {canPurchase === false && <LoginPrompt />}
+                      </FormItem>
+                    )}
+                  />
 
-                <FormField
-                  control={form.control}
-                  name="Phone"
-                  render={({ field }) => (
-                    <FormItem className="!my-[10px]">
-                      <FormLabel>Phone</FormLabel>
-                      <FormControl>
-                        <Input
-                          className="py-5 sm:py-6"
-                          FormError={!!form.formState.errors.Phone}
-                          placeholder="Phone"
-                          {...field}
-                        />
-                      </FormControl>
+                  <FormField
+                    control={form.control}
+                    name="Phone"
+                    render={({ field }) => (
+                      <FormItem className="!my-[10px]">
+                        <FormLabel>Phone</FormLabel>
+                        <FormControl>
+                          <Input
+                            className="py-5 sm:py-6"
+                            FormError={!!form.formState.errors.Phone}
+                            placeholder="Phone"
+                            {...field}
+                          />
+                        </FormControl>
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
 
-                <FormField
-                  control={form.control}
-                  name="Address"
-                  render={({ field }) => (
-                    <FormItem className="!my-[10px]">
-                      <FormLabel>Address</FormLabel>
-                      <FormControl>
-                        <Input
-                          className="py-7"
-                          FormError={!!form.formState.errors.Address}
-                          placeholder="Address eg. - Area, Road Number , House Number"
-                          {...field}
-                        />
-                      </FormControl>
+                  <FormField
+                    control={form.control}
+                    name="Address"
+                    render={({ field }) => (
+                      <FormItem className="!my-[10px]">
+                        <FormLabel>Address</FormLabel>
+                        <FormControl>
+                          <Input
+                            className="py-7"
+                            FormError={!!form.formState.errors.Address}
+                            placeholder="Address eg. - Area, Road Number , House Number"
+                            {...field}
+                          />
+                        </FormControl>
 
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
               </div>
-            </div>
 
-            {/* Shipping Section */}
-            <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
-              <h2 className="text-xl sm:text-2xl font-semibold mb-6">
-                Shipping Area
-              </h2>
-              {shippingMethods && shippingMethods.length && (
-                <RadioGroup
-                  onValueChange={(val) =>
-                    setSelectedShippingMethod(parseInt(val))
-                  }
-                  defaultValue={shippingMethods[0].Id.toString()}
-                  className="space-y-3"
-                >
-                  {shippingMethods.map((method) => (
-                    <Label
-                      key={method.Id}
-                      htmlFor={method.Id.toString()}
-                      className="relative flex p-3 sm:p-4 cursor-pointer rounded-lg border border-gray-200 hover:border-primary transition-colors"
-                    >
-                      <div className="flex items-start gap-3 sm:gap-4 w-full">
-                        <RadioGroupItem
-                          value={method.Id.toString()}
-                          id={method.Id.toString()}
-                        />
-                        <div className="flex justify-between w-full flex-col sm:flex-row gap-2">
-                          <div>
-                            <h3 className="font-medium">{method.Area}</h3>
-                            {method.Description && (
-                              <p className="text-sm text-gray-500">
-                                {method.Description}
-                              </p>
-                            )}
-                          </div>
-                          <div className="sm:text-right">
-                            {method.Cost === 0 ? (
-                              <span className="font-medium text-green-600">
-                                Free
-                              </span>
-                            ) : (
-                              <span className="font-medium">
-                                {formatPrice(method.Cost)}
-                              </span>
-                            )}
+              {/* Shipping Section */}
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:border-emerald-200 transition-colors">
+                <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-gray-900 flex items-center gap-2">
+                  <span className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-sm">
+                    2
+                  </span>
+                  Shipping Area
+                </h2>
+                {shippingMethods && shippingMethods.length && (
+                  <RadioGroup
+                    onValueChange={(val) =>
+                      setSelectedShippingMethod(parseInt(val))
+                    }
+                    defaultValue={shippingMethods[0].Id.toString()}
+                    className="space-y-3"
+                  >
+                    {shippingMethods.map((method) => (
+                      <Label
+                        key={method.Id}
+                        htmlFor={method.Id.toString()}
+                        className="relative flex p-4 cursor-pointer rounded-lg border border-gray-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition-all duration-200"
+                      >
+                        <div className="flex items-start gap-3 sm:gap-4 w-full">
+                          <RadioGroupItem
+                            value={method.Id.toString()}
+                            id={method.Id.toString()}
+                          />
+                          <div className="flex justify-between w-full flex-col sm:flex-row gap-2">
+                            <div>
+                              <h3 className="font-medium">{method.Area}</h3>
+                              {method.Description && (
+                                <p className="text-sm text-gray-500">
+                                  {method.Description}
+                                </p>
+                              )}
+                            </div>
+                            <div className="sm:text-right">
+                              {method.Cost === 0 ? (
+                                <span className="font-medium text-green-600">
+                                  Free
+                                </span>
+                              ) : (
+                                <span className="font-medium">
+                                  {formatPrice(method.Cost)}
+                                </span>
+                              )}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </Label>
-                  ))}
-                </RadioGroup>
-              )}
-            </div>
+                      </Label>
+                    ))}
+                  </RadioGroup>
+                )}
+              </div>
 
-            {/* Delivery Method Section */}
-            <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
-              <h2 className="text-xl sm:text-2xl font-semibold mb-6">
-                Delivery Method
-              </h2>
-              {deliveryMethods && deliveryMethods.length && (
-                <RadioGroup
-                  onValueChange={(val) => {
-                    setSelectedDeliveryMethod(parseInt(val));
-                  }}
-                  defaultValue={deliveryMethods[0].Id.toString()}
-                  className="space-y-3"
-                >
-                  {deliveryMethods.map((method) => (
-                    <Label
-                      key={method.Id}
-                      htmlFor={`delivery-${method.Id}`}
-                      className="relative flex p-3 sm:p-4 cursor-pointer rounded-lg border border-gray-200 hover:border-primary transition-colors"
-                    >
-                      <div className="flex items-start gap-3 sm:gap-4 w-full">
-                        <RadioGroupItem
-                          value={method.Id.toString()}
-                          id={`delivery-${method.Id}`}
-                        />
-                        <div className="flex justify-between w-full flex-col sm:flex-row gap-2">
+              {/* Delivery Method Section */}
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:border-emerald-200 transition-colors">
+                <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-gray-900 flex items-center gap-2">
+                  <span className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-sm">
+                    3
+                  </span>
+                  Delivery Method
+                </h2>
+                {deliveryMethods && deliveryMethods.length && (
+                  <RadioGroup
+                    onValueChange={(val) => {
+                      setSelectedDeliveryMethod(parseInt(val));
+                    }}
+                    defaultValue={deliveryMethods[0].Id.toString()}
+                    className="space-y-3"
+                  >
+                    {deliveryMethods.map((method) => (
+                      <Label
+                        key={method.Id}
+                        htmlFor={`delivery-${method.Id}`}
+                        className="relative flex p-4 cursor-pointer rounded-lg border border-gray-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition-all duration-200"
+                      >
+                        <div className="flex items-start gap-3 sm:gap-4 w-full">
+                          <RadioGroupItem
+                            value={method.Id.toString()}
+                            id={`delivery-${method.Id}`}
+                          />
+                          <div className="flex justify-between w-full flex-col sm:flex-row gap-2">
+                            <div>
+                              <h3 className="font-medium">
+                                {method.DeliveryMethod}
+                              </h3>
+                              {method.Description && (
+                                <p className="text-sm text-gray-500">
+                                  {method.Description}
+                                </p>
+                              )}
+                            </div>
+                            <div className="sm:text-right">
+                              {method.Cost === 0 ? (
+                                <span className="font-medium text-green-600">
+                                  Free
+                                </span>
+                              ) : (
+                                <span className="font-medium">
+                                  {formatPrice(method.Cost)}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </div>
+                      </Label>
+                    ))}
+                  </RadioGroup>
+                )}
+              </div>
+
+              {/* Payment Section */}
+              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:border-emerald-200 transition-colors">
+                <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-gray-900 flex items-center gap-2">
+                  <span className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-sm">
+                    4
+                  </span>
+                  Payment Method
+                </h2>
+                {paymentMethods && paymentMethods.length > 0 && (
+                  <RadioGroup
+                    onValueChange={(val) =>
+                      setSelectedPaymentMethod(parseInt(val))
+                    }
+                    defaultValue={paymentMethods[0].Id.toString()}
+                    className="space-y-3"
+                  >
+                    {paymentMethods.map((method) => (
+                      <Label
+                        key={method.Id}
+                        htmlFor={`payment-${method.Id}`}
+                        className="relative flex p-4 cursor-pointer rounded-lg border border-gray-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition-all duration-200"
+                      >
+                        <div className="flex items-center gap-3 sm:gap-4 w-full">
+                          <RadioGroupItem
+                            value={method.Id.toString()}
+                            id={`payment-${method.Id}`}
+                          />
                           <div>
                             <h3 className="font-medium">
-                              {method.DeliveryMethod}
+                              {method.PaymentMethod}
                             </h3>
                             {method.Description && (
                               <p className="text-sm text-gray-500">
@@ -530,164 +603,123 @@ const Checkout = () => {
                               </p>
                             )}
                           </div>
-                          <div className="sm:text-right">
-                            {method.Cost === 0 ? (
-                              <span className="font-medium text-green-600">
-                                Free
-                              </span>
-                            ) : (
-                              <span className="font-medium">
-                                {formatPrice(method.Cost)}
-                              </span>
-                            )}
-                          </div>
                         </div>
-                      </div>
-                    </Label>
-                  ))}
-                </RadioGroup>
-              )}
-            </div>
-
-            {/* Payment Section */}
-            <div className="bg-white rounded-lg shadow-sm p-4 sm:p-6">
-              <h2 className="text-xl sm:text-2xl font-semibold mb-6">
-                Payment Method
-              </h2>
-              {paymentMethods && paymentMethods.length > 0 && (
-                <RadioGroup
-                  onValueChange={(val) =>
-                    setSelectedPaymentMethod(parseInt(val))
-                  }
-                  defaultValue={paymentMethods[0].Id.toString()}
-                  className="space-y-3"
-                >
-                  {paymentMethods.map((method) => (
-                    <Label
-                      key={method.Id}
-                      htmlFor={`payment-${method.Id}`}
-                      className="relative flex p-3 sm:p-4 cursor-pointer rounded-lg border border-gray-200 hover:border-primary transition-colors"
-                    >
-                      <div className="flex items-center gap-3 sm:gap-4 w-full">
-                        <RadioGroupItem
-                          value={method.Id.toString()}
-                          id={`payment-${method.Id}`}
-                        />
-                        <div>
-                          <h3 className="font-medium">
-                            {method.PaymentMethod}
-                          </h3>
-                          {method.Description && (
-                            <p className="text-sm text-gray-500">
-                              {method.Description}
-                            </p>
-                          )}
-                        </div>
-                      </div>
-                    </Label>
-                  ))}
-                </RadioGroup>
-              )}
-
-              {/* Turnstile and Place Order Button */}
-              <div className="mt-6 space-y-4">
-                {siteKey && (
-                  <div className="w-full overflow-hidden">
-                    <Turnstile
-                      options={{ size: 'compact' }}
-                      siteKey={siteKey}
-                    />
-                  </div>
+                      </Label>
+                    ))}
+                  </RadioGroup>
                 )}
 
-                <Button
-                  type="submit"
-                  className="w-full py-5 sm:py-6 text-base sm:text-lg font-medium"
-                  disabled={!turnstileLoaded || isPending || !canPurchase}
-                  variant="default"
-                >
-                  {!turnstileLoaded ? (
-                    <>
-                      <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                      Please wait...
-                    </>
-                  ) : !canPurchase ? (
-                    <>
-                      <Lock className="mr-2 h-4 w-4" />
-                      Login Required
-                    </>
-                  ) : (
-                    <>
-                      {isPending ? (
-                        <>
-                          <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                          Processing...
-                        </>
-                      ) : (
-                        <>
-                          <Lock className="mr-2 h-4 w-4" />
-                          Place Order
-                        </>
-                      )}
-                    </>
+                {/* Turnstile and Place Order Button */}
+                <div className="mt-6 space-y-4">
+                  {siteKey && (
+                    <div className="w-full overflow-hidden">
+                      <Turnstile
+                        options={{ size: 'compact' }}
+                        siteKey={siteKey}
+                      />
+                    </div>
                   )}
-                </Button>
-              </div>
-            </div>
-          </form>
-        </Form>
 
-        {/* Order Summary Card */}
-        <div className="md:sticky md:top-24 h-fit mb-6 md:mb-0">
-          <Card className="shadow-sm">
-            <CardHeader className="border-b p-4 sm:p-6">
-              <CardTitle>Order Summary</CardTitle>
-              <CardDescription>
-                {cart?.length} {cart?.length === 1 ? 'item' : 'items'} in cart
-              </CardDescription>
-            </CardHeader>
-            <CardContent className="p-4 sm:p-6">
-              <div className="space-y-4">
-                {cart?.map((cartItem) => (
-                  <CartItem key={cartItem.VariationId} Cart={cartItem} />
-                ))}
+                  <Button
+                    type="submit"
+                    className="w-full py-6 text-base sm:text-lg font-medium bg-emerald-600 hover:bg-emerald-700 text-white transition-all duration-200 rounded-lg"
+                    disabled={!turnstileLoaded || isPending || !canPurchase}
+                    variant="default"
+                  >
+                    {!turnstileLoaded ? (
+                      <>
+                        <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                        Please wait...
+                      </>
+                    ) : !canPurchase ? (
+                      <>
+                        <Lock className="mr-2 h-4 w-4" />
+                        Login Required
+                      </>
+                    ) : (
+                      <>
+                        {isPending ? (
+                          <>
+                            <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                            Processing...
+                          </>
+                        ) : (
+                          <>
+                            <Lock className="mr-2 h-4 w-4" />
+                            Place Order
+                          </>
+                        )}
+                      </>
+                    )}
+                  </Button>
+                </div>
               </div>
-            </CardContent>
-            <CardFooter className="border-t p-4 sm:p-6">
-              <div className="w-full space-y-3">
-                <div className="flex justify-between text-sm">
-                  <span>Subtotal</span>
-                  <span>{formatPrice(estimatedTotal)}</span>
+            </form>
+          </Form>
+
+          {/* Order Summary Card */}
+          <div className="md:sticky md:top-24 h-fit mb-6 md:mb-0">
+            <Card className="shadow-sm border border-gray-100 rounded-xl overflow-hidden">
+              <CardHeader className="border-b border-gray-100 p-6 bg-gradient-to-br from-emerald-50 to-emerald-100/50">
+                <CardTitle className="text-gray-900">Order Summary</CardTitle>
+                <CardDescription className="text-emerald-600 font-medium">
+                  {cart?.length} {cart?.length === 1 ? 'item' : 'items'} in cart
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="p-6 bg-white">
+                <div className="space-y-4">
+                  {cart?.map((cartItem) => (
+                    <CartItem key={cartItem.VariationId} Cart={cartItem} />
+                  ))}
                 </div>
-                <div className="flex justify-between text-sm">
-                  <span>Shipping</span>
-                  <span>
-                    {formatPrice(
-                      shippingMethods?.find(
-                        (s) => s.Id === selectedShippingMethod
-                      )?.Cost || 0
-                    )}
-                  </span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span>Delivery</span>
-                  <span>
-                    {formatPrice(
-                      deliveryMethods?.find(
-                        (s) => s.Id === selectedDeliveryMethod
-                      )?.Cost || 0
-                    )}
-                  </span>
-                </div>
-                <div className="border-t pt-3">
-                  <div className="flex justify-between font-medium">
-                    <span>Total</span>
-                    <span>{formatPrice(estimatedTotal)}</span>
+              </CardContent>
+              <CardFooter className="border-t border-gray-100 p-6 bg-gradient-to-br from-emerald-50 to-emerald-100/50">
+                <div className="w-full space-y-3">
+                  <div className="flex justify-between text-sm text-gray-600">
+                    <span>Subtotal</span>
+                    <span className="font-medium text-gray-900">
+                      {formatPrice(estimatedTotal)}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-sm text-gray-600">
+                    <span>Shipping</span>
+                    <span className="font-medium text-gray-900">
+                      {formatPrice(
+                        shippingMethods?.find(
+                          (s) => s.Id === selectedShippingMethod
+                        )?.Cost || 0
+                      )}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-sm text-gray-600">
+                    <span>Delivery</span>
+                    <span className="font-medium text-gray-900">
+                      {formatPrice(
+                        deliveryMethods?.find(
+                          (s) => s.Id === selectedDeliveryMethod
+                        )?.Cost || 0
+                      )}
+                    </span>
+                  </div>
+                  <div className="border-t border-gray-200 pt-3">
+                    <div className="flex justify-between items-center">
+                      <span className="text-lg font-medium text-gray-900">
+                        Total
+                      </span>
+                      <div className="text-right">
+                        <span className="text-2xl font-semibold text-emerald-600">
+                          {formatPrice(estimatedTotal)}
+                        </span>
+                        <p className="text-sm text-gray-500 mt-1">
+                          Including VAT
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </CardFooter>
-          </Card>
+              </CardFooter>
+            </Card>
+          </div>
         </div>
       </div>
     </div>

@@ -69,23 +69,24 @@ const Home = () => {
   }, [isPaused]);
 
   return (
-    <div className="w-full max-w-[1220px] mx-auto gap-6 py-6 px-4 sm:px-8">
+    <div className="w-full mx-auto">
+      {/* Hero Carousel Section */}
       {homeHero?.length > 0 && (
-        <div className="mb-6 sm:mb-10">
+        <div className="mb-12">
           <div
             ref={carouselRef}
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
           >
             <Carousel
-              className="rounded-2xl overflow-hidden bg-slate-100"
+              className="overflow-hidden"
               opts={{
                 loop: true,
                 align: 'start',
               }}
               setApi={handleCarouselApi}
             >
-              <CarouselContent className="h-[300px] sm:h-[400px] md:h-[500px]">
+              <CarouselContent className="h-[400px] sm:h-[500px] md:h-[600px]">
                 {homeHero.map((hero, index) => (
                   <CarouselItem key={index}>
                     <div className="relative w-full h-full group">
@@ -95,26 +96,27 @@ const Home = () => {
                         alt={`hero slide ${index + 1}`}
                         loading={index === 0 ? 'eager' : 'lazy'}
                       />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                     </div>
                   </CarouselItem>
                 ))}
               </CarouselContent>
               <CarouselPrevious
                 data-carousel-prev
-                className="left-4 bg-white/90 hover:bg-white shadow-lg border-none transition-transform duration-300 hover:scale-110"
+                className="left-8 bg-white/90 hover:bg-white shadow-lg border-none transition-all duration-300 hover:scale-110 hover:shadow-xl"
               />
               <CarouselNext
                 data-carousel-next
-                className="right-4 bg-white/90 hover:bg-white shadow-lg border-none transition-transform duration-300 hover:scale-110"
+                className="right-8 bg-white/90 hover:bg-white shadow-lg border-none transition-all duration-300 hover:scale-110 hover:shadow-xl"
               />
 
-              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+              <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-2">
                 {homeHero.map((_, index) => (
                   <button
                     key={index}
                     className={`w-2 h-2 rounded-full transition-all duration-300 ${
                       currentSlide === index
-                        ? 'bg-white w-6'
+                        ? 'bg-white w-8'
                         : 'bg-white/50 hover:bg-white/75'
                     }`}
                     onClick={() => {
@@ -132,12 +134,16 @@ const Home = () => {
         </div>
       )}
 
+      {/* Product Sections */}
       {homeSesctions?.length > 0 && (
-        <div className="space-y-12 sm:space-y-24">
+        <div className="max-w-[1220px] mx-auto px-4 sm:px-8 space-y-16 sm:space-y-24">
           {homeSesctions.map((section) => (
             <div key={section.Id.toString()}>
-              <div className="text-center mb-6 sm:mb-8">
-                <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold mb-3 sm:mb-4">
+              <div className="text-center mb-10">
+                <span className="text-indigo-600 font-medium mb-2 block">
+                  Collection
+                </span>
+                <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-gray-900 to-gray-600">
                   {section.Title}
                 </h1>
                 <div className="max-w-3xl mx-auto">
@@ -147,7 +153,6 @@ const Home = () => {
                   />
                 </div>
               </div>
-
               <SectionProducts sectionId={section.Id} />
             </div>
           ))}

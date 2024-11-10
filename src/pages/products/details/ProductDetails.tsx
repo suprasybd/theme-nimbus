@@ -4,7 +4,7 @@ import {
   useQuery,
   useSuspenseQuery,
 } from '@tanstack/react-query';
-import { useNavigate, useParams } from '@tanstack/react-router';
+import { Link, useNavigate, useParams } from '@tanstack/react-router';
 import cn from 'classnames';
 import React, { useEffect, useMemo, useState } from 'react';
 import { SuprasyRender } from 'suprasy-render-react';
@@ -21,6 +21,7 @@ import {
 } from '@/libs/helpers/formatPrice';
 import { useCartStore } from '@/store/cartStore';
 import ProductPricing from './components/ProductPricing';
+import { CheckCircle, XCircle } from 'lucide-react';
 
 export const getProductsDetailsOptions = (slug: string) =>
   queryOptions({
@@ -106,162 +107,210 @@ const ProductDetails: React.FC = () => {
     ) < 0;
 
   return (
-    <div className="max-w-[1220px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="lg:grid lg:grid-cols-2 lg:gap-x-8 lg:items-start">
-        {/* Left column - Product Images */}
-        <div className="w-full">
-          {productImages && (
-            <ProductImages
-              key={selectedVariation.toString()}
-              Images={productImages}
-            />
-          )}
-        </div>
-
-        {/* Right column - Product Info */}
-        <div className="mt-10 px-4 sm:px-0 sm:mt-16 lg:mt-0">
-          {productDetails && (
-            <>
-              <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-                {productDetails.Title}
-              </h1>
-
-              <div className="mt-6">
-                <ProductPricing
-                  price={productVariation?.Price || 0}
-                  salesPrice={productVariation?.SalesPrice}
-                />
-              </div>
-
-              <div className="mt-6">
-                <SuprasyRender
-                  className="prose prose-sm max-w-none min-h-fit"
-                  initialVal={productDetails.Summary}
-                />
-              </div>
-
-              {/* Variations */}
-              <div className="mt-8">
-                <h3 className="text-sm font-medium text-gray-900">
-                  Variations
-                </h3>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {productVariationsResponse?.Data?.map((variation) => (
-                    <Button
-                      key={variation.Id}
-                      onClick={() => setSelectedVariation(variation.Id)}
-                      className={cn(
-                        'px-4 py-2 rounded-full transition-all',
-                        variation.Id === selectedVariation
-                          ? 'bg-black text-white'
-                          : 'bg-gray-100 text-gray-900 hover:bg-gray-200'
-                      )}
-                    >
-                      {variation.ChoiceName}
-                    </Button>
-                  ))}
-                </div>
-              </div>
-
-              {/* Inventory Status */}
-              <div className="mt-6">
-                {productVariation?.Inventory &&
-                productVariation.Inventory > 0 ? (
-                  <p className="text-sm text-green-600">
-                    {productVariation.Inventory} items available
-                  </p>
-                ) : (
-                  <p className="text-sm text-red-600">Out of stock</p>
-                )}
-              </div>
-
-              {/* Quantity Selector */}
-              <div className="mt-6">
-                <label className="text-sm font-medium text-gray-700">
-                  Quantity
-                </label>
-                <div className="mt-2 flex rounded-md">
-                  <button
-                    className="px-4 py-2 border border-r-0 border-gray-300 rounded-l-md hover:bg-gray-50"
-                    onClick={() => quantity > 1 && setQuantity(quantity - 1)}
-                  >
-                    -
-                  </button>
-                  <input
-                    type="text"
-                    className="w-20 text-center border-y border-gray-300"
-                    value={quantity}
-                    onChange={(e) => setQuantity(parseInt(e.target.value) || 1)}
-                  />
-                  <button
-                    className="px-4 py-2 border border-l-0 border-gray-300 rounded-r-md hover:bg-gray-50"
-                    onClick={() => setQuantity(quantity + 1)}
-                  >
-                    +
-                  </button>
-                </div>
-              </div>
-
-              {/* Action Buttons */}
-              <div className="mt-8 flex flex-col gap-4">
-                <Button
-                  onClick={() => {
-                    if (selectedVariation && ProductID && isVariationUnderQty) {
-                      addToCart({
-                        ProductId: ProductID,
-                        VariationId: selectedVariation,
-                        Quantity: quantity,
-                      });
-                      toast({
-                        title: 'Success',
-                        description: 'Item added to cart',
-                        variant: 'default',
-                      });
-                    } else {
-                      toast({
-                        variant: 'destructive',
-                        title: 'Stock alert',
-                        description: 'Not enough items in stock',
-                      });
-                    }
-                  }}
-                  className="w-full py-3 bg-white border-2 border-black text-black hover:bg-gray-50"
-                  disabled={!isVariationUnderQty}
-                >
-                  Add to Cart
-                </Button>
-                <Button
-                  onClick={() => {
-                    if (selectedVariation && ProductID && isVariationUnderQty) {
-                      addToCart({
-                        ProductId: ProductID,
-                        VariationId: selectedVariation,
-                        Quantity: quantity,
-                      });
-                      navigate({ to: '/checkout' });
-                    }
-                  }}
-                  className="w-full py-3 bg-green-600 text-white hover:bg-green-700"
-                  disabled={!isVariationUnderQty}
-                >
-                  Buy Now
-                </Button>
-              </div>
-            </>
-          )}
+    <div className="min-h-screen bg-gray-50">
+      {/* Breadcrumb - Optional */}
+      <div className="bg-white border-b">
+        <div className="max-w-[1220px] mx-auto px-4 sm:px-6 lg:px-8 py-3">
+          <nav className="text-sm">
+            <ol className="flex items-center space-x-2">
+              <li>
+                <Link to="/" className="text-gray-500 hover:text-indigo-600">
+                  Home
+                </Link>
+              </li>
+              <span className="text-gray-400">/</span>
+              <li className="text-gray-900 font-medium truncate">
+                {productDetails?.Title}
+              </li>
+            </ol>
+          </nav>
         </div>
       </div>
 
-      {/* Product Description */}
-      <div className="mt-16 lg:mt-24 border-t border-gray-200 pt-12">
-        <h2 className="text-2xl font-bold tracking-tight text-gray-900 mb-6">
-          Description
-        </h2>
-        {productDetails?.Description && (
-          <div className="prose prose-sm max-w-none">
-            <SuprasyRender initialVal={productDetails.Description} />
+      <div className="max-w-[1220px] mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+        <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+          <div className="lg:grid lg:grid-cols-2 lg:items-start">
+            {/* Left column - Product Images */}
+            <div className="lg:border-r lg:border-gray-200">
+              <div className="sticky top-24 h-full">
+                {productImages && (
+                  <ProductImages
+                    key={selectedVariation.toString()}
+                    Images={productImages}
+                  />
+                )}
+              </div>
+            </div>
+
+            {/* Right column - Product Info */}
+            <div className="p-6 lg:p-10">
+              {productDetails && (
+                <>
+                  {/* Sale Badge */}
+                  {isOnSale && (
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-red-100 text-red-600 mb-4">
+                      Sale
+                    </span>
+                  )}
+
+                  <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
+                    {productDetails.Title}
+                  </h1>
+
+                  {/* Pricing Section */}
+                  <div className="mt-6 flex items-baseline gap-4">
+                    <ProductPricing
+                      price={productVariation?.Price || 0}
+                      salesPrice={productVariation?.SalesPrice}
+                    />
+                  </div>
+
+                  {/* Summary */}
+                  <div className="mt-6 pb-6 border-b border-gray-200">
+                    <SuprasyRender
+                      className="prose prose-sm max-w-none text-gray-600"
+                      initialVal={productDetails.Summary}
+                    />
+                  </div>
+
+                  {/* Variations */}
+                  <div className="mt-8">
+                    <h3 className="text-sm font-medium text-gray-900 mb-4">
+                      Select Variation
+                    </h3>
+                    <div className="flex flex-wrap gap-3">
+                      {productVariationsResponse?.Data?.map((variation) => (
+                        <button
+                          key={variation.Id}
+                          onClick={() => setSelectedVariation(variation.Id)}
+                          className={cn(
+                            'px-4 py-2 rounded-lg border-2 transition-all duration-200',
+                            variation.Id === selectedVariation
+                              ? 'border-indigo-600 bg-indigo-50 text-indigo-600'
+                              : 'border-gray-200 hover:border-gray-300 text-gray-700'
+                          )}
+                        >
+                          {variation.ChoiceName}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Inventory Status */}
+                  <div className="mt-6">
+                    {productVariation?.Inventory &&
+                    productVariation.Inventory > 0 ? (
+                      <div className="flex items-center gap-2 text-green-600">
+                        <CheckCircle className="h-5 w-5" />
+                        <span className="text-sm font-medium">
+                          {productVariation.Inventory} items available
+                        </span>
+                      </div>
+                    ) : (
+                      <div className="flex items-center gap-2 text-red-600">
+                        <XCircle className="h-5 w-5" />
+                        <span className="text-sm font-medium">
+                          Out of stock
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Quantity Selector */}
+                  <div className="mt-8">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                      Quantity
+                    </label>
+                    <div className="flex rounded-lg border border-gray-300 w-32">
+                      <button
+                        className="px-3 py-2 hover:bg-gray-50 text-gray-600 transition-colors"
+                        onClick={() =>
+                          quantity > 1 && setQuantity(quantity - 1)
+                        }
+                      >
+                        -
+                      </button>
+                      <input
+                        type="text"
+                        className="w-full text-center border-x border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                        value={quantity}
+                        onChange={(e) =>
+                          setQuantity(parseInt(e.target.value) || 1)
+                        }
+                      />
+                      <button
+                        className="px-3 py-2 hover:bg-gray-50 text-gray-600 transition-colors"
+                        onClick={() => setQuantity(quantity + 1)}
+                      >
+                        +
+                      </button>
+                    </div>
+                  </div>
+
+                  {/* Action Buttons */}
+                  <div className="mt-8 space-y-4">
+                    <Button
+                      onClick={() => {
+                        if (
+                          selectedVariation &&
+                          ProductID &&
+                          isVariationUnderQty
+                        ) {
+                          addToCart({
+                            ProductId: ProductID,
+                            VariationId: selectedVariation,
+                            Quantity: quantity,
+                          });
+                          toast({
+                            title: 'Added to Cart',
+                            description: 'Item successfully added to your cart',
+                            variant: 'default',
+                          });
+                        }
+                      }}
+                      className="w-full py-3 bg-indigo-600 text-white hover:bg-indigo-700 transition-colors"
+                      disabled={!isVariationUnderQty}
+                    >
+                      Add to Cart
+                    </Button>
+                    <Button
+                      onClick={() => {
+                        if (
+                          selectedVariation &&
+                          ProductID &&
+                          isVariationUnderQty
+                        ) {
+                          addToCart({
+                            ProductId: ProductID,
+                            VariationId: selectedVariation,
+                            Quantity: quantity,
+                          });
+                          navigate({ to: '/checkout' });
+                        }
+                      }}
+                      className="w-full py-3 bg-green-600 text-white hover:bg-green-700 transition-colors"
+                      disabled={!isVariationUnderQty}
+                    >
+                      Buy Now
+                    </Button>
+                  </div>
+                </>
+              )}
+            </div>
           </div>
-        )}
+        </div>
+
+        {/* Product Description */}
+        <div className="mt-12 bg-white rounded-2xl shadow-sm p-8">
+          <h2 className="text-2xl font-bold text-gray-900 mb-6">
+            Product Description
+          </h2>
+          {productDetails?.Description && (
+            <div className="prose prose-lg max-w-none">
+              <SuprasyRender initialVal={productDetails.Description} />
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

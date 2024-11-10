@@ -16,6 +16,7 @@ import React, { useMemo } from 'react';
 import ImagePreview from '../Image/ImagePreview';
 import cn from 'classnames';
 import { Image } from 'lucide-react';
+import { CheckCircle, XCircle } from 'lucide-react';
 
 const ProductCard: React.FC<{ ProductId: number }> = ({ ProductId }) => {
   const { data: productsDetailsResponse } = useSuspenseQuery(
@@ -89,136 +90,89 @@ const ProductCard: React.FC<{ ProductId: number }> = ({ ProductId }) => {
   };
 
   return (
-    <div className="w-[310px] md:max-w-[274px] h-[400px] hover:cursor-pointer group">
-      <div className="rounded-lg overflow-hidden relative border border-gray-200 hover:border-gray-300 transition-all duration-200 h-full flex flex-col">
-        <Link
-          to="/products/$slug"
-          params={{ slug: productDetails?.Slug || '/' }}
-          className="block relative flex-1"
-        >
-          <div
-            className={cn(
-              'h-[200px] relative overflow-hidden',
-              !productImages && 'bg-slate-200 flex justify-center items-center'
-            )}
-          >
-            {productImages && productImages.length > 0 && (
-              <>
-                <ImagePreview
-                  className="w-full h-[200px] object-cover transition-transform duration-300 group-hover:scale-110"
-                  src={productImages[0].ImageUrl}
-                  alt={productDetails?.Title || 'product'}
-                />
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center">
-                  <Button
-                    variant="secondary"
-                    size="sm"
-                    className="text-slate-500"
-                  >
-                    Quick View
-                  </Button>
+    <Link
+      to={`/products/${productDetails.Slug}`}
+      className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 w-full max-w-sm"
+    >
+      {/* Image Container */}
+      <div className="relative aspect-square overflow-hidden bg-gray-100">
+        {productImages && productImages.length > 0 ? (
+          <>
+            <img
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+              src={productImages[0].ImageUrl}
+              alt={productDetails?.Title || 'product'}
+            />
+            {productVariation?.SalesPrice &&
+              productVariation.SalesPrice < productVariation.Price && (
+                <div className="absolute top-2 right-2 bg-red-500 text-white px-2 py-1 rounded text-sm font-medium">
+                  {Math.abs(
+                    calculateDiscountPercentage(
+                      productVariation.SalesPrice,
+                      productVariation.Price
+                    )
+                  )
+                    .toFixed(2)
+                    .replace(/\.?0+$/, '')}
+                  % OFF
                 </div>
-              </>
-            )}
-            {!productImages && (
-              <Image size={'50px'} className="text-slate-400" />
-            )}
+              )}
+            <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300" />
+          </>
+        ) : (
+          <div className="w-full h-full flex items-center justify-center">
+            <Image className="w-16 h-16 text-gray-400" />
           </div>
-
-          {isOnSale && (
-            <span className="absolute top-2 right-2 bg-red-600 text-white text-xs font-medium px-2 py-1 rounded">
-              {Math.abs(
-                calculateDiscountPercentage(
-                  productVariation?.SalesPrice,
-                  productVariation?.Price
-                )
-              ).toFixed(0)}
-              % OFF
-            </span>
-          )}
-
-          <div className="p-4 flex flex-col h-[136px]">
-            <h3 className="font-medium text-base line-clamp-2 group-hover:text-green-600 transition-colors">
-              {truncateTitle(productDetails?.Title || '')}
-            </h3>
-
-            <div className="mt-auto space-y-1">
-              <div className="flex items-baseline gap-2">
-                <span className="font-semibold text-lg">
-                  {formatPrice(
-                    productVariation?.SalesPrice || productVariation?.Price || 0
-                  )}
-                </span>
-                {productVariation?.SalesPrice && isOnSale && (
-                  <span className="text-sm text-gray-500 line-through">
-                    {formatPrice(productVariation?.Price)}
-                  </span>
-                )}
-              </div>
-
-              <div className="text-sm">
-                {productVariation?.Inventory &&
-                productVariation.Inventory > 0 ? (
-                  <span className="text-green-600">
-                    {productVariation.Inventory} in stock
-                  </span>
-                ) : (
-                  <span className="text-red-600">Out of stock</span>
-                )}
-              </div>
-            </div>
-          </div>
-        </Link>
-
-        <div className="p-4 pt-0">
-          <div className="flex gap-2">
-            <Button
-              onClick={(e) => {
-                e.preventDefault();
-                if (selectedVariation && ProductID && isVariationUnderQty) {
-                  addToCart({
-                    ProductId: ProductID,
-                    VariationId: selectedVariation,
-                    Quantity: 1,
-                  });
-                  toast({
-                    title: 'Success',
-                    description: 'Item added to cart',
-                    variant: 'default',
-                  });
-                } else {
-                  toast({
-                    variant: 'destructive',
-                    title: 'Stock alert',
-                    description: 'Not enough items in stock',
-                  });
-                }
-              }}
-              className="flex-1 bg-white border-2 border-gray-700 text-black hover:bg-gray-50"
-              disabled={!inStock || !isVariationUnderQty}
-            >
-              Add to cart
-            </Button>
-            <Button
-              onClick={(e) => {
-                if (selectedVariation && ProductID && isVariationUnderQty) {
-                  addToCart({
-                    ProductId: ProductID,
-                    VariationId: selectedVariation,
-                    Quantity: 1,
-                  });
-                  navigate({ to: '/checkout' });
-                }
-              }}
-              className="flex-1 bg-green-600 hover:bg-green-700 text-white"
-              disabled={!inStock || !isVariationUnderQty}
-            >
-              Buy now
-            </Button>
-          </div>
-        </div>
+        )}
       </div>
-    </div>
+
+      {/* Content */}
+      <div className="p-4">
+        {/* Title */}
+        <h3 className="font-medium text-lg mb-2 line-clamp-2 group-hover:text-indigo-600 transition-colors">
+          {productDetails?.Title}
+        </h3>
+
+        {/* Price */}
+        {productVariation && (
+          <div className="flex items-baseline gap-2 mb-3">
+            <span className="text-xl font-bold text-gray-900">
+              {formatPrice(
+                productVariation.SalesPrice || productVariation.Price
+              )}
+            </span>
+            {productVariation.SalesPrice &&
+              productVariation.SalesPrice < productVariation.Price && (
+                <span className="text-sm text-gray-500 line-through">
+                  {formatPrice(productVariation.Price)}
+                </span>
+              )}
+          </div>
+        )}
+
+        {/* Stock Status */}
+        {productVariation && (
+          <div className="flex items-center justify-between">
+            <p className="text-sm">
+              {productVariation.Inventory > 0 ? (
+                <span className="text-green-600 flex items-center">
+                  <CheckCircle className="w-4 h-4 mr-1" />
+                  In Stock
+                </span>
+              ) : (
+                <span className="text-red-600 flex items-center">
+                  <XCircle className="w-4 h-4 mr-1" />
+                  Out of Stock
+                </span>
+              )}
+            </p>
+            <button className="text-indigo-600 hover:text-indigo-700 text-sm font-medium">
+              View Details →
+            </button>
+          </div>
+        )}
+      </div>
+    </Link>
   );
 };
 
