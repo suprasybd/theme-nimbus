@@ -85,78 +85,93 @@ const PasswordReset = () => {
   };
 
   return (
-    <div className="container mx-auto max-w-[400px] py-10 px-4">
-      <Card>
-        <CardHeader>
-          <CardTitle>Reset Password</CardTitle>
-          <CardDescription>Enter your new password</CardDescription>
-        </CardHeader>
-        <Form {...form}>
-          <form onSubmit={handleFormWrapper}>
-            <CardContent className="space-y-4">
-              <FormField
-                control={form.control}
-                name="Password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>New Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="Enter new password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-50 via-white to-purple-50 flex items-center justify-center py-10 px-4">
+      <div className="w-full max-w-[450px]">
+        <div className="text-center mb-6">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+            Reset Password
+          </h1>
+          <p className="text-gray-600 mt-2">
+            Please enter your new password below
+          </p>
+        </div>
+
+        <Card className="border-0 shadow-xl bg-white/80 backdrop-blur-sm">
+          <Form {...form}>
+            <form onSubmit={handleFormWrapper}>
+              <CardContent className="space-y-6 pt-6">
+                <FormField
+                  control={form.control}
+                  name="Password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-700">
+                        New Password
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          placeholder="Enter new password"
+                          className="h-11 bg-white border-gray-200 focus:border-indigo-500 focus:ring-indigo-500/20"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-500" />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="confirmPassword"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-700">
+                        Confirm Password
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          placeholder="Confirm new password"
+                          className="h-11 bg-white border-gray-200 focus:border-indigo-500 focus:ring-indigo-500/20"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage className="text-red-500" />
+                    </FormItem>
+                  )}
+                />
+                {siteKey && (
+                  <div className="flex justify-center">
+                    <Turnstile siteKey={siteKey} options={{ size: 'normal' }} />
+                  </div>
                 )}
-              />
-              <FormField
-                control={form.control}
-                name="confirmPassword"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Confirm Password</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="Confirm new password"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              {siteKey && (
-                <Turnstile siteKey={siteKey} options={{ size: 'normal' }} />
-              )}
-            </CardContent>
-            <CardFooter className="flex flex-col space-y-4">
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={!turnstileLoaded || isPending}
-              >
-                {isPending ? (
-                  <>
-                    <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                    Resetting...
-                  </>
-                ) : (
-                  'Reset Password'
-                )}
-              </Button>
-              <Link
-                to="/login"
-                className="text-sm text-center text-muted-foreground hover:underline"
-              >
-                Back to login
-              </Link>
-            </CardFooter>
-          </form>
-        </Form>
-      </Card>
+              </CardContent>
+              <CardFooter className="flex flex-col space-y-4 pb-6">
+                <Button
+                  type="submit"
+                  className="w-full h-11 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-200 hover:shadow-lg hover:shadow-indigo-500/25"
+                  disabled={!turnstileLoaded || isPending}
+                >
+                  {isPending ? (
+                    <>
+                      <ReloadIcon className="mr-2 h-5 w-5 animate-spin" />
+                      Resetting...
+                    </>
+                  ) : (
+                    'Reset Password'
+                  )}
+                </Button>
+                <Link
+                  to="/login"
+                  className="text-sm text-center text-gray-600 hover:text-indigo-600 transition-colors"
+                >
+                  ← Back to login
+                </Link>
+              </CardFooter>
+            </form>
+          </Form>
+        </Card>
+      </div>
     </div>
   );
 };

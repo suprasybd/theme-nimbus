@@ -85,8 +85,13 @@ const NavBar: React.FC = () => {
           <div className="hidden md:block">
             {/* Upper Nav - Search & Account */}
             <div className="flex items-center justify-between py-3 px-4 sm:px-8 border-b border-indigo-500/30">
-              {/* Search Bar */}
-              <div className="flex-1 max-w-md">
+              {/* Logo - Left */}
+              <Link to="/" className="flex-shrink-0">
+                <img className="h-10 w-auto" src={logo?.LogoLink} alt="logo" />
+              </Link>
+
+              {/* Search Bar - Center */}
+              <div className="flex-1 max-w-md mx-auto">
                 <div className="relative">
                   <input
                     type="text"
@@ -100,11 +105,6 @@ const NavBar: React.FC = () => {
                   />
                 </div>
               </div>
-
-              {/* Logo - Center */}
-              <Link to="/" className="flex-shrink-0 mx-8">
-                <img className="h-10 w-auto" src={logo?.LogoLink} alt="logo" />
-              </Link>
 
               {/* Account & Cart */}
               <div className="flex items-center space-x-6">

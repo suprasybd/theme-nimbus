@@ -70,63 +70,77 @@ const RequestPasswordReset = () => {
   };
 
   return (
-    <div className="container mx-auto max-w-[400px] py-10 px-4">
-      <Card>
-        <CardHeader>
-          <CardTitle>Reset Password</CardTitle>
-          <CardDescription>
-            Enter your email address and we'll send you a password reset link
-          </CardDescription>
-        </CardHeader>
-        <Form {...form}>
-          <form onSubmit={handleFormWrapper}>
-            <CardContent className="space-y-4">
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="Enter your email"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-50 to-purple-50/30 py-10 px-4">
+      <div className="w-full max-w-[440px]">
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+            Reset Password
+          </h1>
+          <p className="text-gray-600 mt-2">
+            Don't worry, we'll help you recover your account
+          </p>
+        </div>
+
+        <Card className="border-0 shadow-xl bg-white/70 backdrop-blur-sm">
+          <CardHeader className="space-y-1 pb-4">
+            <CardTitle className="text-xl">Password Recovery</CardTitle>
+            <CardDescription>
+              Enter your email address and we'll send you a password reset link
+            </CardDescription>
+          </CardHeader>
+          <Form {...form}>
+            <form onSubmit={handleFormWrapper}>
+              <CardContent className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-gray-700">Email</FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="Enter your email"
+                          className="h-11 bg-white/50"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                {siteKey && (
+                  <div className="flex justify-center">
+                    <Turnstile siteKey={siteKey} options={{ size: 'normal' }} />
+                  </div>
                 )}
-              />
-              {siteKey && (
-                <Turnstile siteKey={siteKey} options={{ size: 'normal' }} />
-              )}
-            </CardContent>
-            <CardFooter className="flex flex-col space-y-4">
-              <Button
-                type="submit"
-                className="w-full"
-                disabled={!turnstileLoaded || isPending}
-              >
-                {isPending ? (
-                  <>
-                    <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                    Sending...
-                  </>
-                ) : (
-                  'Send Reset Link'
-                )}
-              </Button>
-              <Link
-                to="/login"
-                className="text-sm text-center text-muted-foreground hover:underline"
-              >
-                Back to login
-              </Link>
-            </CardFooter>
-          </form>
-        </Form>
-      </Card>
+              </CardContent>
+              <CardFooter className="flex flex-col space-y-4 pt-2">
+                <Button
+                  type="submit"
+                  className="w-full h-11 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white transition-all duration-300 shadow-md hover:shadow-lg"
+                  disabled={!turnstileLoaded || isPending}
+                >
+                  {isPending ? (
+                    <>
+                      <ReloadIcon className="mr-2 h-5 w-5 animate-spin" />
+                      Sending Recovery Link...
+                    </>
+                  ) : (
+                    'Send Reset Link'
+                  )}
+                </Button>
+                <Link
+                  to="/login"
+                  className="text-sm text-center text-gray-600 hover:text-indigo-600 transition-colors duration-200"
+                >
+                  ← Back to login
+                </Link>
+              </CardFooter>
+            </form>
+          </Form>
+        </Card>
+      </div>
     </div>
   );
 };

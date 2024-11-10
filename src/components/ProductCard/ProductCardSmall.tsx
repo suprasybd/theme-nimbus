@@ -51,13 +51,13 @@ const ProductCardSmall: React.FC<{
         className="block"
         onClick={handleClick}
       >
-        <div className="rounded-lg border border-gray-100 hover:border-gray-200 overflow-hidden p-3 transition-all duration-200">
-          <div className="flex items-center gap-4">
+        <div className="rounded-xl border border-gray-100 hover:border-indigo-200 overflow-hidden p-4 transition-all duration-300 hover:shadow-lg bg-gradient-to-br from-white to-slate-50/50">
+          <div className="flex items-center gap-5">
             <div
               className={cn(
-                'w-[80px] h-[80px] rounded-md overflow-hidden flex-shrink-0',
+                'w-[90px] h-[90px] rounded-xl overflow-hidden flex-shrink-0 shadow-sm',
                 !productImages &&
-                  'bg-slate-100 flex justify-center items-center'
+                  'bg-gradient-to-br from-slate-100 to-indigo-50 flex justify-center items-center'
               )}
             >
               {productImages && productImages.length > 0 ? (
@@ -67,23 +67,23 @@ const ProductCardSmall: React.FC<{
                   alt={productDetails?.Title || 'product'}
                 />
               ) : (
-                <Image size={'40px'} className="text-slate-400" />
+                <Image size={'44px'} className="text-slate-400" />
               )}
             </div>
 
             <div className="flex-1 min-w-0">
-              <h3 className="font-medium text-base mb-1 line-clamp-2 group-hover:text-green-600 transition-colors">
+              <h3 className="font-medium text-base mb-2 line-clamp-2 group-hover:bg-gradient-to-r group-hover:from-indigo-600 group-hover:to-purple-600 group-hover:bg-clip-text group-hover:text-transparent transition-all">
                 {productDetails?.Title}
               </h3>
 
               {variation && (
                 <div className="flex items-baseline gap-2">
-                  <span className="font-semibold text-base">
+                  <span className="font-semibold text-base bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
                     {formatPrice(variation.SalesPrice || variation.Price)}
                   </span>
                   {variation.SalesPrice &&
                     variation.SalesPrice < variation.Price && (
-                      <span className="text-sm text-gray-500 line-through">
+                      <span className="text-sm text-gray-400 line-through">
                         {formatPrice(variation.Price)}
                       </span>
                     )}
@@ -91,13 +91,15 @@ const ProductCardSmall: React.FC<{
               )}
 
               {variation && (
-                <p className="text-sm text-gray-600 mt-1">
+                <p className="text-sm mt-2">
                   {variation.Inventory > 0 ? (
-                    <span className="text-green-600">
+                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-emerald-500 to-teal-500 text-white">
                       {variation.Inventory} in stock
                     </span>
                   ) : (
-                    <span className="text-red-600">Out of stock</span>
+                    <span className="px-2 py-1 rounded-full text-xs font-medium bg-gradient-to-r from-red-500 to-pink-500 text-white">
+                      Out of stock
+                    </span>
                   )}
                 </p>
               )}

@@ -14,14 +14,21 @@ const VerifyCode = () => {
   });
 
   return (
-    <div className="w-full max-w-[1220px] min-h-full mx-auto gap-6 py-40 px-4 sm:px-8 ">
-      <div className="bg-white shadow-md rounded-lg px-6 py-4 ">
-        {isSuccess ? (
-          <div className="text-green-600 w-full flex justify-center items-center">
-            <div className="flex justify-center flex-col">
-              <div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-purple-50/30 flex items-center justify-center py-10 px-4">
+      <div className="w-full max-w-[440px]">
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+            Email Verification
+          </h1>
+          <p className="text-gray-600 mt-2">Verifying your email address...</p>
+        </div>
+
+        <div className="bg-white/70 backdrop-blur-sm shadow-xl rounded-xl border-0 p-6">
+          {isSuccess ? (
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full mx-auto flex items-center justify-center mb-4">
                 <svg
-                  className="h-6 w-6 inline-block mr-2"
+                  className="h-8 w-8 text-green-600"
                   fill="none"
                   viewBox="0 0 24 24"
                   stroke="currentColor"
@@ -33,32 +40,47 @@ const VerifyCode = () => {
                     d="M5 13l4 4L19 7"
                   />
                 </svg>
-                Verified successfully!
               </div>
-
-              <Button className="my-3" variant={'green'}>
-                <Link to="/login">Click here to login</Link>
+              <h2 className="text-xl font-semibold text-gray-900 mb-2">
+                Verified Successfully!
+              </h2>
+              <p className="text-gray-600 mb-6">
+                Your email has been verified. You can now login to your account.
+              </p>
+              <Button
+                className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium py-2.5"
+                variant="clean"
+              >
+                <Link to="/login">Continue to Login</Link>
               </Button>
             </div>
-          </div>
-        ) : (
-          <div className="text-red-600">
-            <svg
-              className="h-6 w-6 inline-block mr-2"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-            Verification failed. Please try again.
-          </div>
-        )}
+          ) : (
+            <div className="text-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-red-100 to-pink-100 rounded-full mx-auto flex items-center justify-center mb-4">
+                <svg
+                  className="h-8 w-8 text-red-600"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
+              </div>
+              <h2 className="text-xl font-semibold text-gray-900 mb-2">
+                Verification Failed
+              </h2>
+              <p className="text-gray-600">
+                Unable to verify your email. Please try again or contact support
+                if the issue persists.
+              </p>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

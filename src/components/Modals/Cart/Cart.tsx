@@ -64,11 +64,11 @@ const CartModal: React.FC = () => {
         }
       }}
     >
-      <SheetContent className="p-0 overflow-auto w-full md:w-[450px] bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-950">
+      <SheetContent className="p-0 overflow-auto w-full md:w-[450px] bg-gradient-to-br from-slate-50 to-purple-50/30">
         <div className="flex flex-col h-full">
-          <SheetHeader className="px-6 py-4 border-b border-indigo-900/20 bg-gradient-to-br from-indigo-900/50 to-purple-900/50">
-            <SheetTitle className="text-slate-100">Shopping Cart</SheetTitle>
-            <SheetDescription className="text-indigo-300">
+          <SheetHeader className="px-6 py-6 border-b border-gray-100/50 bg-gradient-to-r from-indigo-600 to-purple-600">
+            <SheetTitle className="text-white">Shopping Cart</SheetTitle>
+            <SheetDescription className="text-indigo-100">
               Manage your cart items
             </SheetDescription>
           </SheetHeader>
@@ -77,18 +77,18 @@ const CartModal: React.FC = () => {
             {isCartEmpty && (
               <div className="h-full w-full flex justify-center items-center p-6">
                 <div className="text-center">
-                  <ShoppingCart className="w-16 h-16 mx-auto mb-4 text-indigo-700/50" />
-                  <h1 className="font-bold text-xl mb-2 text-slate-100">
+                  <ShoppingCart className="w-16 h-16 mx-auto mb-4 text-indigo-300" />
+                  <h1 className="font-bold text-xl mb-2 text-gray-900">
                     Your cart is empty
                   </h1>
-                  <p className="text-slate-400">Add items to start shopping</p>
+                  <p className="text-gray-500">Add items to start shopping</p>
                 </div>
               </div>
             )}
 
             {!isCartEmpty && (
-              <div className="px-6">
-                <div className="divide-y">
+              <div className="px-6 py-4">
+                <div className="divide-y divide-gray-100/50">
                   {cart?.map((cartEach) => (
                     <CartItem key={cartEach.Id} Cart={cartEach} />
                   ))}
@@ -98,10 +98,10 @@ const CartModal: React.FC = () => {
           </div>
 
           {!isCartEmpty && (
-            <div className="border-t border-indigo-900/20 p-6 bg-gradient-to-br from-indigo-900/50 to-purple-900/50">
+            <div className="border-t border-gray-100/50 p-6 bg-gradient-to-br from-slate-50 to-purple-50/30">
               <div className="flex justify-between mb-4">
-                <h1 className="text-lg font-medium text-slate-100">Total</h1>
-                <h1 className="text-lg font-semibold bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text text-transparent">
+                <h1 className="text-lg font-medium text-gray-900">Total</h1>
+                <h1 className="text-lg font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
                   {formatPrice(estimatedTotal)}
                 </h1>
               </div>
@@ -181,7 +181,7 @@ export const CartItem: React.FC<CartItemPropsTypes> = ({ Cart }) => {
     <div className="flex gap-4 py-4">
       <div className="flex-shrink-0">
         {productImages && (
-          <div className="w-[100px] h-[100px] rounded-lg overflow-hidden bg-gradient-to-br from-indigo-50 to-purple-50 border border-gray-100">
+          <div className="w-[100px] h-[100px] rounded-lg overflow-hidden bg-white border border-gray-200 shadow-sm hover:border-indigo-200 transition-colors">
             <img
               className="w-full h-full object-cover"
               src={productImages[0].ImageUrl}
@@ -212,7 +212,9 @@ export const CartItem: React.FC<CartItemPropsTypes> = ({ Cart }) => {
         {variation?.ChoiceName && (
           <p className="text-sm text-gray-500 mt-1">
             Variant:{' '}
-            <span className="text-indigo-600">{variation.ChoiceName}</span>
+            <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent font-medium">
+              {variation.ChoiceName}
+            </span>
           </p>
         )}
 
@@ -234,9 +236,9 @@ export const CartItem: React.FC<CartItemPropsTypes> = ({ Cart }) => {
         )}
 
         <div className="mt-3">
-          <div className="inline-flex items-center rounded-lg border border-gray-200 hover:border-indigo-200 transition-colors">
+          <div className="inline-flex items-center rounded-lg border border-gray-200 hover:border-indigo-200 transition-colors bg-white">
             <button
-              className="px-3 py-1 hover:bg-indigo-50 transition-colors text-gray-600"
+              className="px-3 py-1 hover:bg-gray-50 transition-colors text-gray-600"
               onClick={(e) => {
                 e.preventDefault();
                 if (quantity - 1 >= 1) {
@@ -248,7 +250,7 @@ export const CartItem: React.FC<CartItemPropsTypes> = ({ Cart }) => {
             </button>
             <input
               type="text"
-              className="w-12 text-center border-x border-gray-200 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              className="w-12 text-center border-x border-gray-200 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-500 bg-white"
               value={quantity}
               onChange={(e) => {
                 const newQty = parseInt(e.target.value);
@@ -264,7 +266,7 @@ export const CartItem: React.FC<CartItemPropsTypes> = ({ Cart }) => {
               }}
             />
             <button
-              className="px-3 py-1 hover:bg-indigo-50 transition-colors text-gray-600"
+              className="px-3 py-1 hover:bg-gray-50 transition-colors text-gray-600"
               onClick={(e) => {
                 e.preventDefault();
                 if (quantity + 1 > totalInStock) {

@@ -100,147 +100,173 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="flex min-h-full mt-20 md:mt-0 flex-col justify-center px-6 py-3 lg:px-8">
-      <div className="bg-white p-4 md:p-20  rounded-2xl">
-        {!isSuccess && (
-          <div>
-            <div className="sm:mx-auto sm:w-full text-center sm:max-w-sm">
-              <h2 className="mt-10  text-2xl font-bold leading-9 tracking-tight text-gray-900">
-                Create an account
-              </h2>
-              <p>Register an account by filling the form bellow. </p>
-            </div>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-600 to-purple-600 px-4 py-12 rounded-md">
+      <div className="w-full max-w-md">
+        <div className="bg-white/95 backdrop-blur-sm shadow-2xl rounded-2xl p-8">
+          {!isSuccess && (
+            <div>
+              <div className="text-center">
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                  Create an account
+                </h2>
+                <p className="mt-2 text-gray-600">
+                  Register an account by filling the form below
+                </p>
+              </div>
 
-            <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
-              <Form {...form}>
-                <form onSubmit={handleFormWrapper} className="space-y-8">
-                  <FormField
-                    control={form.control}
-                    name="FullName"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel>Full Name</FormLabel>
-                        <FormControl>
-                          <Input
-                            className="h-14"
-                            FormError={!!formErrors.errors.FullName}
-                            placeholder="Full Name"
-                            {...field}
-                          />
-                        </FormControl>
+              <div className="mt-8">
+                <Form {...form}>
+                  <form onSubmit={handleFormWrapper} className="space-y-6">
+                    <FormField
+                      control={form.control}
+                      name="FullName"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-gray-700">
+                            Full Name
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              className="h-12 bg-white/50 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
+                              FormError={!!formErrors.errors.FullName}
+                              placeholder="Enter your full name"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="Email"
-                    render={({ field }) => (
-                      <FormItem className="space-y-0 !mt-3">
-                        <FormLabel>Email</FormLabel>
-                        <FormControl>
-                          <Input
-                            className="h-14"
-                            FormError={!!formErrors.errors.Email}
-                            placeholder="Enter Email"
-                            {...field}
-                          />
-                        </FormControl>
+                    <FormField
+                      control={form.control}
+                      name="Email"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-gray-700">Email</FormLabel>
+                          <FormControl>
+                            <Input
+                              className="h-12 bg-white/50 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
+                              FormError={!!formErrors.errors.Email}
+                              placeholder="Enter your email"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                  <FormField
-                    control={form.control}
-                    name="Password"
-                    render={({ field }) => (
-                      <FormItem className="space-y-0 !mt-3">
-                        <FormLabel>Password</FormLabel>
-                        <FormControl>
-                          <Input
-                            className="h-14"
-                            FormError={!!formErrors.errors.Password}
-                            type="password"
-                            placeholder="***********"
-                            {...field}
-                          />
-                        </FormControl>
+                    <FormField
+                      control={form.control}
+                      name="Password"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-gray-700">
+                            Password
+                          </FormLabel>
+                          <FormControl>
+                            <Input
+                              className="h-12 bg-white/50 border-gray-200 focus:border-indigo-500 focus:ring-indigo-500"
+                              FormError={!!formErrors.errors.Password}
+                              type="password"
+                              placeholder="Create a password"
+                              {...field}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-
-                  {siteKey && (
-                    <Turnstile options={{ size: 'auto' }} siteKey={siteKey} />
-                  )}
-
-                  <Button
-                    type="submit"
-                    className="w-full h-11"
-                    variant={'green'}
-                    disabled={!turnstileLoaded}
-                  >
-                    {!turnstileLoaded && (
-                      <>
-                        <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                        wait a few moment..
-                      </>
+                    {siteKey && (
+                      <div className="flex justify-center">
+                        <Turnstile
+                          options={{ size: 'auto' }}
+                          siteKey={siteKey}
+                        />
+                      </div>
                     )}
 
-                    {turnstileLoaded && (
-                      <>
-                        {isPending && (
-                          <>
-                            <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
-                            Registering..
-                          </>
-                        )}
-                        {!isPending && <>Register</>}
-                      </>
-                    )}
-                  </Button>
-
-                  <p className="mt-10 text-center text-sm text-gray-500 ">
-                    Already registred?
-                    <a
-                      href="/login"
-                      className="font-semibold leading-6 text-black pl-2"
+                    <Button
+                      type="submit"
+                      className="w-full h-12 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-200"
+                      disabled={!turnstileLoaded}
                     >
-                      Click here to signin
-                    </a>
-                  </p>
-                </form>
-              </Form>
+                      {!turnstileLoaded && (
+                        <>
+                          <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                          Please wait...
+                        </>
+                      )}
+
+                      {turnstileLoaded && (
+                        <>
+                          {isPending && (
+                            <>
+                              <ReloadIcon className="mr-2 h-4 w-4 animate-spin" />
+                              Creating account...
+                            </>
+                          )}
+                          {!isPending && <>Create Account</>}
+                        </>
+                      )}
+                    </Button>
+
+                    <p className="text-center text-gray-600">
+                      Already registered?{' '}
+                      <Link
+                        to="/login"
+                        className="font-medium text-indigo-600 hover:text-indigo-500 transition-colors"
+                      >
+                        Sign in to your account
+                      </Link>
+                    </p>
+                  </form>
+                </Form>
+              </div>
             </div>
-          </div>
-        )}
-        {isSuccess && (
-          <div className="relative flex flex-col items-center justify-center overflow-hidden py-6 sm:py-12 bg-white">
-            <div className="max-w-xl px-5 text-center">
-              <h2 className="mb-2 text-[42px] font-bold text-zinc-800">
+          )}
+
+          {isSuccess && (
+            <div className="text-center">
+              <div className="mb-6">
+                <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
+                  <svg
+                    className="w-8 h-8 text-green-500"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth="2"
+                      d="M5 13l4 4L19 7"
+                    />
+                  </svg>
+                </div>
+              </div>
+
+              <h2 className="text-3xl font-bold text-gray-900 mb-4">
                 Verification Email Sent
               </h2>
-              <p className="mb-2 text-lg text-zinc-500">
-                We are glad, that you’re with us ? We’ve sent you a verification
-                link to the email address{' '}
-                <span className="font-medium text-indigo-500">
+              <p className="text-gray-600 mb-8">
+                Welcome aboard! We've sent a verification link to{' '}
+                <span className="font-medium text-indigo-600">
                   {usersEmail}
                 </span>
-                .
               </p>
 
-              <a
-                href="/login"
-                className="mt-3 inline-block w-96 rounded bg-green-600 px-5 py-3 font-medium text-white shadow-md shadow-green-500/20 hover:bg-green-700"
+              <Link
+                to="/login"
+                className="inline-block w-full py-3 px-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-200 text-center"
               >
-                Continue →
-              </a>
+                Continue to Login →
+              </Link>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </div>
   );

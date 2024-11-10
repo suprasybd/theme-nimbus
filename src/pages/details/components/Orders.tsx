@@ -36,8 +36,8 @@ const Orders = () => {
   if (!orders || orders.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center py-16 text-center">
-        <ShoppingBag className="h-16 w-16 text-gray-300 mb-4" />
-        <h2 className="text-2xl font-medium text-gray-900 mb-2">
+        <ShoppingBag className="h-16 w-16 text-indigo-300 mb-4" />
+        <h2 className="text-2xl font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent mb-2">
           No orders yet
         </h2>
         <p className="text-gray-500 max-w-md mb-8">
@@ -45,14 +45,16 @@ const Orders = () => {
           your first order!
         </p>
         <Link to="/">
-          <Button className="min-w-[200px]">Start Shopping</Button>
+          <Button className="min-w-[200px] bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700 transition-all duration-300">
+            Start Shopping
+          </Button>
         </Link>
       </div>
     );
   }
 
   return (
-    <div>
+    <div className="space-y-6">
       {orders?.map((order) => (
         <OrdersCard key={order.Id} order={order} />
       ))}
@@ -76,43 +78,49 @@ const OrdersCard: React.FC<{ order: OrderType }> = ({ order }) => {
   const orderProducts = orderProductsResponse?.Data;
 
   return (
-    <div className="p-4 rounded-lg border border-gray-200 my-4 hover:border-gray-300 transition-colors">
+    <div className="p-6 rounded-xl border border-gray-200 hover:border-indigo-200 bg-white shadow-sm hover:shadow-md transition-all duration-300">
       {/* Order Header */}
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-4">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 mb-6">
         <div>
-          <div className="flex items-center gap-2">
-            <div className="font-semibold text-lg">Order #{order.Id}</div>
-            <div className="px-2 py-0.5 text-sm rounded-full bg-gray-100 text-gray-700">
+          <div className="flex items-center gap-3">
+            <div className="font-semibold text-lg bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+              Order #{order.Id}
+            </div>
+            <div className="px-3 py-1 text-sm rounded-full bg-gradient-to-r from-indigo-50 to-purple-50 text-indigo-700 font-medium border border-indigo-100">
               {order.Status}
             </div>
           </div>
-          <div className="text-sm text-gray-500">
+          <div className="text-sm text-gray-500 mt-1">
             {new Date(order.CreatedAt).toLocaleDateString()}
           </div>
         </div>
       </div>
 
       {/* Order Products */}
-      <div className="space-y-3">
+      <div className="space-y-4">
         {orderProducts?.map((product) => (
           <OrderProductCard key={product.Id} product={product} />
         ))}
       </div>
 
       {/* Order Summary */}
-      <div className="mt-4 pt-3 border-t border-gray-200">
-        <div className="space-y-2">
+      <div className="mt-6 pt-4 border-t border-gray-100">
+        <div className="space-y-3">
           <div className="flex justify-between text-sm text-gray-600">
             <span>Shipping:</span>
-            <span>{formatPrice(order.ShippingMethodPrice)}</span>
+            <span className="font-medium">
+              {formatPrice(order.ShippingMethodPrice)}
+            </span>
           </div>
           <div className="flex justify-between text-sm text-gray-600">
             <span>Delivery:</span>
-            <span>{formatPrice(order.DeliveryMethodPrice)}</span>
+            <span className="font-medium">
+              {formatPrice(order.DeliveryMethodPrice)}
+            </span>
           </div>
-          <div className="flex justify-between font-medium text-base pt-2 border-t border-gray-100">
+          <div className="flex justify-between font-medium text-base pt-3 border-t border-gray-100">
             <span>Total:</span>
-            <span>
+            <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
               {formatPrice(
                 orderProducts?.reduce(
                   (acc, product) => acc + product.Price * product.Quantity,
@@ -158,41 +166,41 @@ const OrderProductCard: React.FC<{ product: OrdersProductType }> = ({
   const productImages = productImagesResponse?.Data;
 
   return (
-    <div className="flex items-center gap-4 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
+    <div className="flex items-center gap-4 p-4 bg-gradient-to-r from-slate-50 to-purple-50/30 rounded-lg hover:from-indigo-50/50 hover:to-purple-50/50 transition-all duration-300">
       {/* Product Image */}
       <div
         className={cn(
-          'w-[70px] h-[70px]',
-          'bg-white flex justify-center items-center rounded-md overflow-hidden border border-gray-200'
+          'w-[80px] h-[80px]',
+          'bg-white flex justify-center items-center rounded-lg overflow-hidden border border-gray-100 shadow-sm'
         )}
       >
         {productImages && productImages.length > 0 ? (
           <ImagePreview
-            className="w-full h-full object-cover"
+            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
             src={productImages[0].ImageUrl}
             alt={productDetails?.Title || 'Product image'}
           />
         ) : (
-          <Image size={'30px'} className="text-gray-400" />
+          <Image size={'32px'} className="text-indigo-300" />
         )}
       </div>
 
       <div className="flex-1 min-w-0">
-        <div className="font-medium line-clamp-1">
+        <div className="font-medium line-clamp-1 group-hover:text-indigo-600 transition-colors">
           {productDetails?.Title || 'Loading...'}
           {variation && (
-            <span className="text-sm text-gray-600 ml-2">
+            <span className="text-sm text-indigo-500 ml-2 font-normal">
               ({variation.ChoiceName})
             </span>
           )}
         </div>
-        <div className="text-sm text-gray-600 mt-1">
+        <div className="text-sm text-gray-600 mt-1.5">
           Quantity: {product.Quantity}
         </div>
-        <div className="text-sm text-gray-700 mt-0.5">
-          <span>{formatPrice(product.Price)}</span>
+        <div className="text-sm mt-1">
+          <span className="text-gray-700">{formatPrice(product.Price)}</span>
           <span className="mx-2 text-gray-400">·</span>
-          <span className="font-medium">
+          <span className="font-medium bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
             {formatPrice(product.Price * product.Quantity)}
           </span>
         </div>
