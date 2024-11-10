@@ -71,17 +71,17 @@ export const formSchemaCheckout = z.object({
 
 const LoginPrompt = () => {
   return (
-    <div className="mt-2 p-4 bg-emerald-50 rounded-lg border border-emerald-100">
+    <div className="mt-2 p-4 bg-indigo-50 rounded-lg border border-indigo-100">
       <div className="flex flex-col gap-3">
         <div className="flex items-center gap-3">
-          <div className="h-10 w-10 rounded-full bg-emerald-100 flex items-center justify-center flex-shrink-0">
-            <Lock className="h-5 w-5 text-emerald-600" />
+          <div className="h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
+            <Lock className="h-5 w-5 text-indigo-600" />
           </div>
           <div>
-            <h3 className="text-sm font-medium text-emerald-900">
+            <h3 className="text-sm font-medium text-indigo-900">
               Welcome Back!
             </h3>
-            <p className="text-sm text-emerald-600">
+            <p className="text-sm text-indigo-600">
               Looks like you already have an account. Please sign in to
               continue.
             </p>
@@ -90,7 +90,7 @@ const LoginPrompt = () => {
         <Link to="/login" search={{ redirect: '/checkout' }} className="w-full">
           <Button
             variant="default"
-            className="w-full bg-emerald-600 hover:bg-emerald-700 text-white"
+            className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white"
           >
             Sign In to Continue
           </Button>
@@ -323,27 +323,26 @@ const Checkout = () => {
         <div className="flex justify-center items-center w-full h-[80vh]">
           <div className="text-center max-w-lg">
             <div className="mb-6">
-              <CheckCircle className="h-16 w-16 text-green-500 mx-auto" />
+              <CheckCircle className="h-16 w-16 text-indigo-500 mx-auto" />
             </div>
-            <h1 className="text-3xl font-medium mb-4 text-slate-900">
+            <h1 className="text-3xl font-medium mb-4 text-gray-900">
               Thank you for your order!
             </h1>
-            <p className="text-slate-600 mb-6">
+            <p className="text-gray-600 mb-6">
               Your order has been successfully placed. We've sent a confirmation
-              email to your inbox with all the order details. Please check your
-              email for further instructions.
+              email to your inbox with all the order details.
             </p>
             <div className="space-y-4">
               <Link to="/details">
                 <Button
                   variant="outline"
-                  className="w-full py-6 border-slate-200 hover:bg-slate-50"
+                  className="w-full py-6 border-gray-200 hover:bg-gray-50"
                 >
                   View Order Details
                 </Button>
               </Link>
               <Link to="/" className="mt-3">
-                <Button className="w-full py-6 bg-blue-600 hover:bg-blue-700 text-white">
+                <Button className="w-full py-6 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white">
                   Continue Shopping
                 </Button>
               </Link>
@@ -355,20 +354,20 @@ const Checkout = () => {
   }
 
   return (
-    <div className="w-full min-h-full bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="w-full min-h-full bg-gradient-to-br from-slate-50 to-purple-50/30">
       <div className="max-w-[1220px] mx-auto gap-6 py-8 px-4 sm:px-8">
         <div className="flex flex-col-reverse md:grid md:grid-cols-[1fr,380px] gap-8">
           {/* Form Section */}
           <Form {...form}>
             <form onSubmit={handleFormWrapper} className="space-y-6">
               {/* Delivery Details Section */}
-              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:border-emerald-200 transition-colors">
-                <h1 className="text-xl sm:text-2xl font-semibold mb-6 text-gray-900 flex items-center gap-2">
-                  <span className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-sm">
+              <div className="bg-gradient-to-br from-slate-50 to-purple-50/30 rounded-xl shadow-sm p-6 border border-gray-100 hover:border-indigo-200 transition-colors">
+                <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-gray-900 flex items-center gap-2">
+                  <span className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-indigo-600 text-sm">
                     1
                   </span>
                   Delivery Details
-                </h1>
+                </h2>
                 <div className="space-y-4 sm:space-y-6">
                   <FormField
                     control={form.control}
@@ -455,9 +454,9 @@ const Checkout = () => {
               </div>
 
               {/* Shipping Section */}
-              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:border-emerald-200 transition-colors">
+              <div className="bg-gradient-to-br from-slate-50 to-purple-50/30 rounded-xl shadow-sm p-6 border border-gray-100 hover:border-indigo-200 transition-colors">
                 <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-gray-900 flex items-center gap-2">
-                  <span className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-sm">
+                  <span className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-indigo-600 text-sm">
                     2
                   </span>
                   Shipping Area
@@ -474,7 +473,7 @@ const Checkout = () => {
                       <Label
                         key={method.Id}
                         htmlFor={method.Id.toString()}
-                        className="relative flex p-4 cursor-pointer rounded-lg border border-gray-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition-all duration-200"
+                        className="relative flex p-4 cursor-pointer rounded-lg border border-gray-200 hover:border-indigo-500 hover:bg-indigo-50/50 transition-all duration-200"
                       >
                         <div className="flex items-start gap-3 sm:gap-4 w-full">
                           <RadioGroupItem
@@ -492,7 +491,7 @@ const Checkout = () => {
                             </div>
                             <div className="sm:text-right">
                               {method.Cost === 0 ? (
-                                <span className="font-medium text-green-600">
+                                <span className="font-medium text-indigo-600">
                                   Free
                                 </span>
                               ) : (
@@ -510,9 +509,9 @@ const Checkout = () => {
               </div>
 
               {/* Delivery Method Section */}
-              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:border-emerald-200 transition-colors">
+              <div className="bg-gradient-to-br from-slate-50 to-purple-50/30 rounded-xl shadow-sm p-6 border border-gray-100 hover:border-indigo-200 transition-colors">
                 <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-gray-900 flex items-center gap-2">
-                  <span className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-sm">
+                  <span className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-indigo-600 text-sm">
                     3
                   </span>
                   Delivery Method
@@ -529,7 +528,7 @@ const Checkout = () => {
                       <Label
                         key={method.Id}
                         htmlFor={`delivery-${method.Id}`}
-                        className="relative flex p-4 cursor-pointer rounded-lg border border-gray-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition-all duration-200"
+                        className="relative flex p-4 cursor-pointer rounded-lg border border-gray-200 hover:border-indigo-500 hover:bg-indigo-50/50 transition-all duration-200"
                       >
                         <div className="flex items-start gap-3 sm:gap-4 w-full">
                           <RadioGroupItem
@@ -549,7 +548,7 @@ const Checkout = () => {
                             </div>
                             <div className="sm:text-right">
                               {method.Cost === 0 ? (
-                                <span className="font-medium text-green-600">
+                                <span className="font-medium text-indigo-600">
                                   Free
                                 </span>
                               ) : (
@@ -567,9 +566,9 @@ const Checkout = () => {
               </div>
 
               {/* Payment Section */}
-              <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 hover:border-emerald-200 transition-colors">
+              <div className="bg-gradient-to-br from-slate-50 to-purple-50/30 rounded-xl shadow-sm p-6 border border-gray-100 hover:border-indigo-200 transition-colors">
                 <h2 className="text-xl sm:text-2xl font-semibold mb-6 text-gray-900 flex items-center gap-2">
-                  <span className="w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-600 text-sm">
+                  <span className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-100 to-purple-100 flex items-center justify-center text-indigo-600 text-sm">
                     4
                   </span>
                   Payment Method
@@ -586,7 +585,7 @@ const Checkout = () => {
                       <Label
                         key={method.Id}
                         htmlFor={`payment-${method.Id}`}
-                        className="relative flex p-4 cursor-pointer rounded-lg border border-gray-200 hover:border-emerald-500 hover:bg-emerald-50/50 transition-all duration-200"
+                        className="relative flex p-4 cursor-pointer rounded-lg border border-gray-200 hover:border-indigo-500 hover:bg-indigo-50/50 transition-all duration-200"
                       >
                         <div className="flex items-center gap-3 sm:gap-4 w-full">
                           <RadioGroupItem
@@ -614,6 +613,7 @@ const Checkout = () => {
                   {siteKey && (
                     <div className="w-full overflow-hidden">
                       <Turnstile
+                        className="w-full"
                         options={{ size: 'compact' }}
                         siteKey={siteKey}
                       />
@@ -622,7 +622,7 @@ const Checkout = () => {
 
                   <Button
                     type="submit"
-                    className="w-full py-6 text-base sm:text-lg font-medium bg-emerald-600 hover:bg-emerald-700 text-white transition-all duration-200 rounded-lg"
+                    className="w-full py-6 text-base sm:text-lg font-medium bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white transition-all duration-200 rounded-lg"
                     disabled={!turnstileLoaded || isPending || !canPurchase}
                     variant="default"
                   >
@@ -659,21 +659,21 @@ const Checkout = () => {
 
           {/* Order Summary Card */}
           <div className="md:sticky md:top-24 h-fit mb-6 md:mb-0">
-            <Card className="shadow-sm border border-gray-100 rounded-xl overflow-hidden">
-              <CardHeader className="border-b border-gray-100 p-6 bg-gradient-to-br from-emerald-50 to-emerald-100/50">
+            <Card className="shadow-sm border border-gray-100 rounded-xl overflow-hidden bg-gradient-to-br from-slate-50 to-purple-50/30">
+              <CardHeader className="border-b border-gray-100 p-6 bg-gradient-to-br from-indigo-50 to-purple-50">
                 <CardTitle className="text-gray-900">Order Summary</CardTitle>
-                <CardDescription className="text-emerald-600 font-medium">
+                <CardDescription className="text-indigo-600 font-medium">
                   {cart?.length} {cart?.length === 1 ? 'item' : 'items'} in cart
                 </CardDescription>
               </CardHeader>
-              <CardContent className="p-6 bg-white">
+              <CardContent className="p-6 bg-gradient-to-br from-slate-50 to-purple-50/30">
                 <div className="space-y-4">
                   {cart?.map((cartItem) => (
                     <CartItem key={cartItem.VariationId} Cart={cartItem} />
                   ))}
                 </div>
               </CardContent>
-              <CardFooter className="border-t border-gray-100 p-6 bg-gradient-to-br from-emerald-50 to-emerald-100/50">
+              <CardFooter className="border-t border-gray-100 p-6 bg-gradient-to-br from-indigo-50 to-purple-50">
                 <div className="w-full space-y-3">
                   <div className="flex justify-between text-sm text-gray-600">
                     <span>Subtotal</span>
@@ -707,7 +707,7 @@ const Checkout = () => {
                         Total
                       </span>
                       <div className="text-right">
-                        <span className="text-2xl font-semibold text-emerald-600">
+                        <span className="text-2xl font-semibold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
                           {formatPrice(estimatedTotal)}
                         </span>
                         <p className="text-sm text-gray-500 mt-1">

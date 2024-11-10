@@ -73,10 +73,8 @@ const RootComponent: React.FC = () => {
       </main>
 
       {/* Footer - Consider removing container here too for full-width */}
-      <footer className="bg-slate-900 text-slate-200">
-        <div className="premium-container py-12">
-          <Footer />
-        </div>
+      <footer>
+        <Footer />
       </footer>
     </div>
   );

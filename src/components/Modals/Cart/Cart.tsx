@@ -64,20 +64,24 @@ const CartModal: React.FC = () => {
         }
       }}
     >
-      <SheetContent className="p-0 overflow-auto w-full md:w-[450px]">
+      <SheetContent className="p-0 overflow-auto w-full md:w-[450px] bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-950">
         <div className="flex flex-col h-full">
-          <SheetHeader className="px-6 py-4 border-b">
-            <SheetTitle className="text-xl">Shopping Cart</SheetTitle>
-            <SheetDescription>Manage your cart items</SheetDescription>
+          <SheetHeader className="px-6 py-4 border-b border-indigo-900/20 bg-gradient-to-br from-indigo-900/50 to-purple-900/50">
+            <SheetTitle className="text-slate-100">Shopping Cart</SheetTitle>
+            <SheetDescription className="text-indigo-300">
+              Manage your cart items
+            </SheetDescription>
           </SheetHeader>
 
           <div className="flex-1 overflow-auto">
             {isCartEmpty && (
               <div className="h-full w-full flex justify-center items-center p-6">
                 <div className="text-center">
-                  <ShoppingCart className="w-16 h-16 mx-auto mb-4 text-gray-300" />
-                  <h1 className="font-bold text-xl mb-2">Your cart is empty</h1>
-                  <p className="text-gray-500">Add items to start shopping</p>
+                  <ShoppingCart className="w-16 h-16 mx-auto mb-4 text-indigo-700/50" />
+                  <h1 className="font-bold text-xl mb-2 text-slate-100">
+                    Your cart is empty
+                  </h1>
+                  <p className="text-slate-400">Add items to start shopping</p>
                 </div>
               </div>
             )}
@@ -94,10 +98,10 @@ const CartModal: React.FC = () => {
           </div>
 
           {!isCartEmpty && (
-            <div className="border-t p-6">
+            <div className="border-t border-indigo-900/20 p-6 bg-gradient-to-br from-indigo-900/50 to-purple-900/50">
               <div className="flex justify-between mb-4">
-                <h1 className="text-lg font-medium">Total</h1>
-                <h1 className="text-lg font-bold">
+                <h1 className="text-lg font-medium text-slate-100">Total</h1>
+                <h1 className="text-lg font-semibold bg-gradient-to-r from-indigo-300 to-purple-300 bg-clip-text text-transparent">
                   {formatPrice(estimatedTotal)}
                 </h1>
               </div>
@@ -105,7 +109,7 @@ const CartModal: React.FC = () => {
               <Link to="/checkout" className="block">
                 <Button
                   onClick={closeModal}
-                  className="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-2.5"
+                  className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-medium py-2.5 transition-all duration-200"
                 >
                   Proceed to Checkout
                 </Button>
@@ -177,7 +181,7 @@ export const CartItem: React.FC<CartItemPropsTypes> = ({ Cart }) => {
     <div className="flex gap-4 py-4">
       <div className="flex-shrink-0">
         {productImages && (
-          <div className="w-[100px] h-[100px] rounded-lg overflow-hidden bg-gray-50">
+          <div className="w-[100px] h-[100px] rounded-lg overflow-hidden bg-gradient-to-br from-indigo-50 to-purple-50 border border-gray-100">
             <img
               className="w-full h-full object-cover"
               src={productImages[0].ImageUrl}
@@ -189,7 +193,7 @@ export const CartItem: React.FC<CartItemPropsTypes> = ({ Cart }) => {
 
       <div className="flex-1 min-w-0">
         <div className="flex justify-between gap-2">
-          <h1 className="font-medium text-sm truncate">
+          <h1 className="font-medium text-sm truncate text-gray-900">
             {productDetails?.Title}
           </h1>
           <button
@@ -207,7 +211,8 @@ export const CartItem: React.FC<CartItemPropsTypes> = ({ Cart }) => {
 
         {variation?.ChoiceName && (
           <p className="text-sm text-gray-500 mt-1">
-            Variant: {variation.ChoiceName}
+            Variant:{' '}
+            <span className="text-indigo-600">{variation.ChoiceName}</span>
           </p>
         )}
 
@@ -215,13 +220,13 @@ export const CartItem: React.FC<CartItemPropsTypes> = ({ Cart }) => {
           <div className="mt-2 space-y-1">
             <p className="text-sm text-gray-600">
               Price:{' '}
-              <span className="font-medium">
+              <span className="font-medium text-gray-900">
                 {formatPrice(variation.Price)}
               </span>
             </p>
             <p className="text-sm text-gray-600">
               Subtotal:{' '}
-              <span className="font-medium">
+              <span className="font-medium bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
                 {formatPrice(variation.Price * Cart.Quantity)}
               </span>
             </p>
@@ -229,9 +234,9 @@ export const CartItem: React.FC<CartItemPropsTypes> = ({ Cart }) => {
         )}
 
         <div className="mt-3">
-          <div className="inline-flex items-center rounded-lg border border-gray-200">
+          <div className="inline-flex items-center rounded-lg border border-gray-200 hover:border-indigo-200 transition-colors">
             <button
-              className="px-3 py-1 hover:bg-gray-50 transition-colors"
+              className="px-3 py-1 hover:bg-indigo-50 transition-colors text-gray-600"
               onClick={(e) => {
                 e.preventDefault();
                 if (quantity - 1 >= 1) {
@@ -243,7 +248,7 @@ export const CartItem: React.FC<CartItemPropsTypes> = ({ Cart }) => {
             </button>
             <input
               type="text"
-              className="w-12 text-center border-x border-gray-200 py-1"
+              className="w-12 text-center border-x border-gray-200 py-1 focus:outline-none focus:ring-2 focus:ring-indigo-500"
               value={quantity}
               onChange={(e) => {
                 const newQty = parseInt(e.target.value);
@@ -259,7 +264,7 @@ export const CartItem: React.FC<CartItemPropsTypes> = ({ Cart }) => {
               }}
             />
             <button
-              className="px-3 py-1 hover:bg-gray-50 transition-colors"
+              className="px-3 py-1 hover:bg-indigo-50 transition-colors text-gray-600"
               onClick={(e) => {
                 e.preventDefault();
                 if (quantity + 1 > totalInStock) {
