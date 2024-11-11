@@ -219,30 +219,40 @@ const NavBar: React.FC = () => {
                       ))}
                     </nav>
                   </div>
-                  {isAuthenticated && (
-                    <div className="border-t border-indigo-700 p-4 bg-indigo-800">
-                      <div className="flex items-center space-x-3 mb-3">
+                  <div className="border-t border-indigo-700 p-4 bg-indigo-800">
+                    {isAuthenticated ? (
+                      <>
+                        <div className="flex items-center space-x-3 mb-3">
+                          <UserRound className="h-5 w-5" />
+                          <span className="font-medium">{user?.FullName}</span>
+                        </div>
+                        <div className="space-y-3">
+                          <Link
+                            to="/details"
+                            className="flex items-center space-x-2 text-sm text-indigo-200 hover:text-white"
+                          >
+                            <ShoppingBag className="h-4 w-4" />
+                            <span>Orders</span>
+                          </Link>
+                          <button
+                            onClick={logoutUser}
+                            className="flex items-center space-x-2 text-sm text-red-400 hover:text-red-300"
+                          >
+                            <Power className="h-4 w-4" />
+                            <span>Sign out</span>
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <Link
+                        to="/login"
+                        className="flex items-center space-x-2 text-sm text-indigo-200 hover:text-white"
+                      >
                         <UserRound className="h-5 w-5" />
-                        <span className="font-medium">{user?.FullName}</span>
-                      </div>
-                      <div className="space-y-3">
-                        <Link
-                          to="/details"
-                          className="flex items-center space-x-2 text-sm text-indigo-200 hover:text-white"
-                        >
-                          <ShoppingBag className="h-4 w-4" />
-                          <span>Orders</span>
-                        </Link>
-                        <button
-                          onClick={logoutUser}
-                          className="flex items-center space-x-2 text-sm text-red-400 hover:text-red-300"
-                        >
-                          <Power className="h-4 w-4" />
-                          <span>Sign out</span>
-                        </button>
-                      </div>
-                    </div>
-                  )}
+                        <span>Sign in</span>
+                      </Link>
+                    )}
+                  </div>
                 </div>
               </SheetContent>
             </Sheet>

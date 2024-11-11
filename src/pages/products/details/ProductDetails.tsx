@@ -127,12 +127,12 @@ const ProductDetails: React.FC = () => {
         </div>
       </div>
 
-      <div className="max-w-[1220px] mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+      <div className="max-w-[1220px] mx-auto px-4 sm:px-6 lg:px-8 py-4 sm:py-8 lg:py-12">
         <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
-          <div className="lg:grid lg:grid-cols-2 lg:items-start">
+          <div className="flex flex-col lg:grid lg:grid-cols-2 lg:items-start">
             {/* Left column - Product Images */}
             <div className="lg:border-r lg:border-gray-200">
-              <div className="sticky top-24 h-full">
+              <div className="relative lg:sticky lg:top-24">
                 {productImages && (
                   <ProductImages
                     key={selectedVariation.toString()}
@@ -143,7 +143,7 @@ const ProductDetails: React.FC = () => {
             </div>
 
             {/* Right column - Product Info */}
-            <div className="p-6 lg:p-10">
+            <div className="p-4 sm:p-6 lg:p-10">
               {productDetails && (
                 <>
                   {/* Sale Badge */}

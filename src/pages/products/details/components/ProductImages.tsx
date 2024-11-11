@@ -21,47 +21,9 @@ const ProductImages: React.FC<ProductImagesPropTypes> = ({ Images }) => {
   );
 
   return (
-    <div className="flex flex-col-reverse md:flex-row gap-4 p-6">
-      {/* Thumbnail Carousel */}
-      <div className="w-full md:w-24 h-24 md:h-[600px] flex md:flex-col gap-2 overflow-x-auto md:overflow-y-auto scrollbar-hide">
-        <Carousel
-          className="w-full"
-          orientation="vertical"
-          opts={{
-            align: 'start',
-            containScroll: 'trimSnaps',
-          }}
-        >
-          <CarouselContent className="-mt-1 md:h-[540px]">
-            {Images.map((image, index) => (
-              <CarouselItem key={index} className="pt-1 basis-1/5 md:basis-1/4">
-                <div
-                  onClick={() => setSelectedImage(image.ImageUrl)}
-                  className={cn(
-                    'cursor-pointer rounded-lg overflow-hidden border-2 transition-all duration-200',
-                    selectedImage === image.ImageUrl
-                      ? 'border-indigo-600 shadow-md'
-                      : 'border-transparent hover:border-gray-300'
-                  )}
-                >
-                  <ImagePreview
-                    className="w-full aspect-square object-cover"
-                    src={image.ImageUrl}
-                    alt={`Product thumbnail ${index + 1}`}
-                  />
-                </div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <div className="hidden md:block">
-            <CarouselPrevious className="relative left-1/2 -translate-x-1/2 top-0" />
-            <CarouselNext className="relative left-1/2 -translate-x-1/2 bottom-0" />
-          </div>
-        </Carousel>
-      </div>
-
+    <div className="flex flex-col-reverse lg:flex-col gap-4 p-2 sm:p-4 lg:p-6">
       {/* Main Image */}
-      <div className="flex-1 relative group">
+      <div className="relative group w-full">
         <div className="aspect-square rounded-xl overflow-hidden bg-gray-100">
           <ImagePreview
             alt="Product main image"
@@ -70,10 +32,49 @@ const ProductImages: React.FC<ProductImagesPropTypes> = ({ Images }) => {
           />
         </div>
 
-        {/* Optional: Zoom hint */}
-        <div className="absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1.5 rounded-full text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+        {/* Optional: Zoom hint - Hide on mobile */}
+        <div className="hidden sm:block absolute bottom-4 right-4 bg-black/60 text-white px-3 py-1.5 rounded-full text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity duration-200">
           Hover to zoom
         </div>
+      </div>
+
+      {/* Thumbnail Carousel */}
+      <div className="relative w-full h-20 sm:h-24 lg:h-28">
+        <Carousel
+          className="w-full"
+          orientation="horizontal"
+          opts={{
+            align: 'start',
+            containScroll: 'trimSnaps',
+          }}
+        >
+          <CarouselContent className="-ml-2 h-full">
+            {Images.map((image, index) => (
+              <CarouselItem
+                key={index}
+                className="pl-2 basis-1/4 sm:basis-1/5 lg:basis-1/4"
+              >
+                <div
+                  onClick={() => setSelectedImage(image.ImageUrl)}
+                  className={cn(
+                    'cursor-pointer h-full rounded-lg overflow-hidden border-2 transition-all duration-200',
+                    selectedImage === image.ImageUrl
+                      ? 'border-indigo-600 shadow-md'
+                      : 'border-transparent hover:border-gray-300'
+                  )}
+                >
+                  <ImagePreview
+                    className="w-full h-full object-cover"
+                    src={image.ImageUrl}
+                    alt={`Product thumbnail ${index + 1}`}
+                  />
+                </div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <CarouselPrevious className="hidden sm:flex -left-3 lg:-left-4" />
+          <CarouselNext className="hidden sm:flex -right-3 lg:-right-4" />
+        </Carousel>
       </div>
     </div>
   );
