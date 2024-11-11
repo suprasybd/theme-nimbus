@@ -122,10 +122,12 @@ const OrdersCard: React.FC<{ order: OrderType }> = ({ order }) => {
             <span>Total:</span>
             <span className="bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
               {formatPrice(
-                orderProducts?.reduce(
+                (orderProducts?.reduce(
                   (acc, product) => acc + product.Price * product.Quantity,
                   0
-                ) || 0 + order.ShippingMethodPrice + order.DeliveryMethodPrice
+                ) || 0) +
+                  order.ShippingMethodPrice +
+                  order.DeliveryMethodPrice
               )}
             </span>
           </div>
